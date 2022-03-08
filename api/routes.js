@@ -4,7 +4,7 @@
 import { Router } from 'https://deno.land/x/oak@v6.5.1/mod.ts'
 
 import { extractCredentials, saveFile } from './modules/util.js'
-import { login, register } from './modules/accounts.js'
+import { login, register } from './modules/users.js'
 import { queryall, query } from './modules/games.js'
 
 const router = new Router()
@@ -16,7 +16,7 @@ router.get('/', async context => {
 	context.response.body = data
 })
 
-router.get('/api/users:id', async context => {
+router.get('/api/users', async context => {
 	console.log('GET /api/users')
 	const token = context.request.headers.get('Authorization')
 	console.log(`auth: ${token}`)
@@ -25,6 +25,7 @@ router.get('/api/users:id', async context => {
 		console.log(credentials)
 		const username = await login(credentials)
 		console.log(`username: ${username}`)
+		context.response.status = 200
 		context.response.body = JSON.stringify(
 			{
 				data: { username }

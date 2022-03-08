@@ -4,7 +4,7 @@ import { Application, send, Status } from "https://deno.land/x/oak@v6.5.1/mod.ts
 // status codes https://deno.land/std@0.82.0/http/http_status.ts
 // import { Md5 } from 'https://deno.land/std@0.89.0/hash/md5.ts'
 import { extractCredentials, getEtag, setHeaders } from "./api/modules/util.js";
-import { login } from "./api/modules/accounts.js";
+import { login } from "./api/modules/users.js";
 
 import router from "./api/routes.js";
 
@@ -19,7 +19,7 @@ const app = new Application();
 app.use(async (context, next) => {
 	console.log('middleware running')
 	// if the call is to the API it must include the correct Content-Type
-	if(context.request.url.pathname.includes("/api/") && !(context.request.url.pathname.includes("/api/accounts") && context.request.method === 'POST')) {
+	if(context.request.url.pathname.includes("/api/") && !(context.request.url.pathname.includes("/api/users") && context.request.method === 'POST')) {
 		console.log('API CALL')
 		console.log(context.request.headers.get('Content-Type'))
 		context.response.headers.set('Content-Type', 'application/vnd.api+json')

@@ -5,6 +5,7 @@
 		<meta name="viewport" content="width=device-width", initial-scale="1.0" />
 		<title>Single Page App</title>
 		<link rel="stylesheet" href="style/main.css">
+		<script src="https://cdnjs.cloudflare.com/ajax/libs/showdown/1.4.0/showdown.min.js"></script>
 		<script type="module" src="./router.js" defer></script>
 	</head>
 	<body>
@@ -16,12 +17,13 @@
 		<nav>
 			<ul>
 				<li><a href="/">Home</a></li>
+				<li><a href="/game">Add Game</a></li>
 				<li><a href="/login">Log in</a></li>
 				<li><a href="/logout">Log out</a></li>
 			</ul>
 		</nav>
 		<main>
-			<article>
+			<article name='games'>
 			</article>
 		</main>
 		<footer>
@@ -40,5 +42,22 @@
 	<template id="logout">
 			<p>Do you want to log out?</p>
 			<p><button>OK</button><button>Cancel</button></p>
+	</template>
+	<template id="game">
+		<form name="game">
+			<p><label for="name">Name</label><br /><input type="text" name="name" placeholder="name" /></p>
+			<p><label for="publisher">Publisher</label><br /><input type="text" name="publisher" placeholder="publisher" /></p>
+			<p>
+				<label for="year">Year</label>
+				<input type="range" name="year" value="50" min="1980" max="2022" />
+				<output name="year_val">1980</output>
+			</p>
+			<p>
+				<label for="description">Description</label>
+				<textarea></textarea>
+				<article name='markdown'></article>
+			</p>
+			<p><button type="submit">Submit</button></p>
+		</form>
 	</template>
 </html>

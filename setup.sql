@@ -28,13 +28,13 @@ CREATE TABLE IF NOT EXISTS users (
 );
 
 INSERT INTO users(username, password, profile, role_id)
-	VALUES("user1", "$2b$10$gL33obKAFUT5DK3pEbh72OIHztsWBniBBh.PdeKOrF1yr5KFAsdZO", "/spa/uploads.profile/profile.jpg", 1);
+	VALUES("user1", "$2a$10$efukeAAxezJijmTu7zmP7OTnLlBcR6KrpdHNvhT.RD6ARGIgQa51e", "/spa/uploads.profile/profile.jpg", 1);
 
 INSERT INTO users(username, password, profile, role_id)
-	VALUES("user2", "$2b$10$gL33obKAFUT5DK3pEbh72OIHztsWBniBBh.PdeKOrF1yr5KFAsdZO", "/spa/uploads.profile/profile.jpg", 1);
+	VALUES("user2", "$2a$10$efukeAAxezJijmTu7zmP7OTnLlBcR6KrpdHNvhT.RD6ARGIgQa51e", "/spa/uploads.profile/profile.jpg", 1);
 
 INSERT INTO users(username, password, profile, role_id)
-	VALUES("user3", "$2b$10$gL33obKAFUT5DK3pEbh72OIHztsWBniBBh.PdeKOrF1yr5KFAsdZO", "/spa/uploads.profile/profile.jpg", 1);
+	VALUES("user3", "$2a$10$efukeAAxezJijmTu7zmP7OTnLlBcR6KrpdHNvhT.RD6ARGIgQa51e", "/spa/uploads.profile/profile.jpg", 1);
 
 CREATE TABLE IF NOT EXISTS games (
   id MEDIUMINT UNSIGNED AUTO_INCREMENT PRIMARY KEY,

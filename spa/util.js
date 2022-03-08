@@ -30,7 +30,7 @@ export async function triggerPageChange() {
 		console.log(err)
 	}
 	// replace contents of the page with the correct template
-	const article = document.querySelector('article')
+	const article = document.querySelector('article[name=games]')
 	while (article.lastChild) article.removeChild(article.lastChild) // remove any content from the article element
 	article.appendChild(node) // insert the DOM fragment into the page
 	highlightNav(page)
