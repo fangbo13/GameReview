@@ -3,8 +3,8 @@
 import { Application, send, Status } from "https://deno.land/x/oak@v6.5.1/mod.ts";
 // status codes https://deno.land/std@0.82.0/http/http_status.ts
 // import { Md5 } from 'https://deno.land/std@0.89.0/hash/md5.ts'
-import { extractCredentials, getEtag, setHeaders } from "./api/modules/util.js";
-import { login } from "./api/modules/users.js";
+import { extractCredentials, getEtag, setHeaders, verifyJWT } from "./api/modules/util.js";
+import { login, rolesCheck } from "./api/modules/users.js";
 
 import router from "./api/routes.js";
 
@@ -22,8 +22,8 @@ app.use(async (context, next) => {
 	if(context.request.url.pathname.includes("/api/") && !(context.request.url.pathname.includes("/api/users") && context.request.method === 'POST')) {
 		console.log('API CALL')
 		console.log(context.request.headers.get('Content-Type'))
-		context.response.headers.set('Content-Type', 'application/vnd.api+json')
-		if(context.request.headers.get('Content-Type') !== 'application/vnd.api+json') {
+		context.response.headers.set('Content-Type', 'application/json')
+		if(context.request.headers.get('Content-Type') !== 'application/json') {
 			console.log('wrong Content-Type')
 			context.response.status = 415
 			context.response.body = JSON.stringify(
@@ -31,37 +31,37 @@ app.use(async (context, next) => {
 					errors: [
 						{
 							title: '415 Unsupported Media Type',
-							detail: 'This API supports the JSON:API specification, Content-Type must be application/vnd.api+json'
+							detail: 'This API supports the JSON:API specification, Content-Type must be application/json'
 						}
 					]
 				}
 				, null, 2)
 			return
 		}
+		console.log(context.request.url.pathname)
 		// unless the API call is to register an account, the auth data must match an account
-		if(!context.request.url.pathname.includes('/games')) {
-			console.log('not a call to /games')
+		if(context.request.url.pathname.includes('/users')) {
+			console.log('a call to /login or /logout')
 			// if the authorization header is missing
-			if(context.request.headers.get('Authorization') === null) {
-				console.log('missing Authorization header')
+			if(context.request.headers.get('authorization') === null) {
+				console.log('missing authorization header')
 				context.response.status = 401
 				context.response.body = JSON.stringify(
 					{
 						errors: [
 							{
-								title: '201 Unauthorized',
-								detail: 'the API uses HTTP Basic Auth and requires a correctly-formatted Authorization header'
+								title: '401 Unauthorized',
+								detail: 'the API uses HTTP Basic Auth and requires a correctly-formatted authorization header'
 							}
 						]
 					}
 				, null, 2)
 				return
 			}
-			const token = context.request.headers.get('Authorization')
+			const token = context.request.headers.get('authorization')
 			console.log(`auth: ${token}`)
 			try {
 				const credentials = extractCredentials(token)
-				console.log(credentials)
 				await login(credentials)
 			} catch(err) {
 				console.log('ERROR')
@@ -80,10 +80,79 @@ app.use(async (context, next) => {
 				, null, 2)
 				return
 			}
+		} else if (context.request.url.pathname.includes('/games')) {
+			// call to /api/game
+			if(context.request.headers.get('authorization') === null) {
+				console.log('missing authorization header')
+				context.response.status = 401
+				context.response.body = JSON.stringify(
+					{
+						errors: [
+							{
+								title: '401 Unauthorized',
+								detail: 'the API uses HTTP Basic Auth and requires a correctly-formatted authorization header'
+							}
+						]
+					}
+				, null, 2)
+				return
+			}
+			// role-based access control and Authentication uses JWT, 
+			const token = context.request.headers.get('authorization')
+			try {
+				const auth = await verifyJWT(token)
+				if(!auth){
+					console.log('authorization error')
+					context.response.status = 403
+					context.response.body = JSON.stringify(
+						{
+							errors: [
+								{
+									title: '403 Forbidden',
+									detail: 'User Role Forbidden'
+								}
+							]
+						}
+					, null, 2)
+					return
+				}
+			}catch(err) {
+				context.response.status = 401
+				context.response.body = JSON.stringify(
+					{
+						errors: [
+							{
+								title: '401 Unauthorized',
+								detail: err.message
+							}
+						]
+					}
+				, null, 2)
+				return
+			}
+			// data validated using schemas
+			try {
+				const schemas = JSON.stringify(context.request.body())
+			} catch(err) {
+				console.log('invalid JSON')
+			}
+		} else {
+			context.response.status = 400
+				context.response.body = JSON.stringify(
+					{
+						errors: [
+							{
+								title: '400 Unsupported router',
+								detail: 'Unsupported router'
+							}
+						]
+					}
+				, null, 2)
+				return
 		}
 	}
 	console.log('MIDDLEWARE ENDS')
-  await next();
+  	await next();
 });
 
 // checks if file exists
@@ -134,6 +203,7 @@ async function errorHandler(context, next) {
 app.use(staticFiles);
 app.use(router.routes());
 app.use(router.allowedMethods());
+// CORS headers
 app.use(setHeaders);
 app.use(errorHandler);
 

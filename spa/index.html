@@ -54,10 +54,23 @@
 			</p>
 			<p>
 				<label for="description">Description</label>
-				<textarea></textarea>
+				<input type="textarea" name="description" />
 				<article name='markdown'></article>
 			</p>
+			<p>
+				<label for="cover">Cover</label><br />
+				<img id="cover" width="120" height="150">
+				<input type="file" accept="image/*" name="cover" />
+			</p>
+			<input type="hidden" name="username" placeholder="username" value/></p>
 			<p><button type="submit">Submit</button></p>
 		</form>
+	</template>
+
+	<template id="games">
+		<section>
+			<h2></h2>
+			<p></p>
+		</section>
 	</template>
 </html>

@@ -26,11 +26,11 @@ async function login() {
 	console.log(response)
 	if(response.status === 200) {
 		localStorage.setItem('username', response.json.data.username)
-		localStorage.setItem('authorization', token)
+		localStorage.setItem('authorization', response.json.data.token)
 		showMessage(`you are logged in as ${response.json.data.username}`)
 		await loadPage('home')
 	} else {
 		document.querySelector('input[name="pass"]').value = ''
 		showMessage(response.json.errors[0].detail)
-		}
+	}
 }

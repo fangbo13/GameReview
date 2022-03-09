@@ -1,7 +1,7 @@
 
 /* logout.js */
 
-import { customiseNavbar, loadPage } from '../util.js'
+import { customiseNavbar, loadPage, showMessage } from '../util.js'
 
 export async function setup(node) {
 	try {

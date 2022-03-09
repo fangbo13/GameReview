@@ -15,7 +15,7 @@ CREATE TABLE IF NOT EXISTS roles (
 );
 
 INSERT INTO roles(name, description) VALUES("user", "user who can add game and comment");
-
+INSERT INTO roles(name, description) VALUES("guest", "user who has no access");
 
 CREATE TABLE IF NOT EXISTS users (
   id MEDIUMINT UNSIGNED AUTO_INCREMENT PRIMARY KEY,
@@ -35,6 +35,9 @@ INSERT INTO users(username, password, profile, role_id)
 
 INSERT INTO users(username, password, profile, role_id)
 	VALUES("user3", "$2a$10$efukeAAxezJijmTu7zmP7OTnLlBcR6KrpdHNvhT.RD6ARGIgQa51e", "/spa/uploads.profile/profile.jpg", 1);
+
+INSERT INTO users(username, password, profile, role_id)
+	VALUES("user4", "$2a$10$efukeAAxezJijmTu7zmP7OTnLlBcR6KrpdHNvhT.RD6ARGIgQa51e", "/spa/uploads.profile/profile.jpg", 2);
 
 CREATE TABLE IF NOT EXISTS games (
   id MEDIUMINT UNSIGNED AUTO_INCREMENT PRIMARY KEY,
