@@ -7,8 +7,7 @@ const converter = new showdown.Converter({'tables': true, 'tasklists': true, 'st
 export async function setup(node) {
 	console.log('GAME: setup')
 	try {
-		document.querySelector('header p').innerText = 'Home'
-		customiseNavbar(['home', 'add', 'logout']) // navbar if logged in
+		customiseNavbar(['home', 'logout']) // navbar if logged in
 		const token = localStorage.getItem('authorization')
 		console.log(token)
 		if(token === null) customiseNavbar(['game', 'login']) //navbar if logged out

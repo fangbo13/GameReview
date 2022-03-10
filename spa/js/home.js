@@ -19,12 +19,11 @@ const schema = {
 export async function setup(node) {
 	console.log('HOME: setup')
 	try {
-		console.log(node)
-		document.querySelector('header p').innerText = 'Home'
-		customiseNavbar(['home', 'game', 'logout']) // navbar if logged in
+		// document.querySelector('header p').innerText = 'Home'
 		const token = localStorage.getItem('authorization')
 		console.log(token)
 		if(token === null) customiseNavbar(['home', 'login']) //navbar if logged out
+		else customiseNavbar(['home', 'game', 'logout']) // navbar if logged in
 		// add content to the page
 		await addContent(node)
 	} catch(err) {

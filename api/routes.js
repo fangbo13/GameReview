@@ -6,7 +6,8 @@ import { moment } from "https://deno.land/x/deno_moment/mod.ts";
 
 import { extractCredentials, saveFile, createJWT } from './modules/util.js'
 import { login, rolesCheck, queryUsername, queryUserid } from './modules/users.js'
-import { queryall, query, insert } from './modules/games.js'
+import { queryallGames, queryGameById, insertGame } from './modules/games.js'
+import { queryallComments, queryCommentById, insertComment } from './modules/comments.js'
 
 const router = new Router()
 
@@ -67,21 +68,11 @@ router.get('/api/users', async context => {
 	}
 })
 
-// router.post('/api/users', async context => {
-// 	console.log('POST /api/accounts')
-// 	const body  = await context.request.body()
-// 	const data = await body.value
-// 	console.log(data)
-// 	await register(data)
-// 	context.response.status = 201
-// 	context.response.body = JSON.stringify({ status: 'success', msg: 'account created' })
-// })
-
 router.get('/api/games', async context => {
 	context.response.headers.set('Allow', 'GET, POST')
 	console.log('GET /api/games')
 	try {
-		const games = await queryall()
+		const games = await queryallGames()
 		context.host = context.request.url.host
 		games.forEach(game => {
 			game.user = queryUsername(game.user)
@@ -119,7 +110,7 @@ router.post('/api/games', async context =>  {
 		const userid = await queryUserid(data.username)
 		const params = {name: data.name, publisher: data.publisher, year: data.year, add_date: moment().format('YYYY-MM-DD'),
 						description: data.description, cover: data.cover, user: userid }
-		await insert(params)
+		await insertGame(params)
 		context.response.status = 201
 		context.response.body = JSON.stringify(
 			{
@@ -147,7 +138,7 @@ router.get('/api/games/:id', async context => {
 	context.response.headers.set('Allow', 'GET, PUT, DELETE')
 	console.log('GET /api/games/:id')
 	try {
-		const game = await query(context.params.id)
+		const game = await queryGameById(context.params.id)
 		context.host = context.request.url.host
 		game.user = queryUsername(game.user)
 		game.links =[
@@ -187,20 +178,55 @@ router.get('/api/games/:id', async context => {
 	}
 })
 
-router.post('/api/files', async context => {
-	console.log('POST /api/files')
+router.get('/api/comments', async context => {
+	context.response.headers.set('Allow', 'GET, POST')
+	console.log('GET /api/comments')
 	try {
-		const token = context.request.headers.get('Authorization')
-		console.log(`auth: ${token}`)
-		const body  = await context.request.body()
+		const comments = await queryallComments()
+		context.host = context.request.url.host
+		comments.forEach(comment => {
+			comment.user = queryUsername(comment.user)
+			comment.game = queryGameById(comment.game)
+			comment.links =[
+				{
+					herf: `https://${context.host}/api/comments/${comment.id}`,
+					rel: "comment",
+					type: "GET"
+				}
+			]
+			// delete comment.id
+		})
+		context.response.body = JSON.stringify(comments, null, 2)
+	}catch(err) {
+		context.response.status = 401
+		context.response.body = JSON.stringify(
+			{
+				errors: [
+					{
+						title: '401 Unauthorized.',
+						detail: err.message
+					}
+				]
+			}
+		, null, 2)
+	}
+})
+
+router.post('/api/comments', async context =>  {
+	context.response.headers.set("Allow", 'GET, POST')
+	console.log('POST /api/comments')
+	try {
+		const body = await context.request.body()
 		const data = await body.value
-		console.log(data)
-		saveFile(data.base64, data.user)
+		const userid = await queryUserid(data.username)
+		const params = {content: data.content, date: moment().format('YYYY-MM-DD'), score: data.scoer, country: data.country, region: data.region,
+						user: userid, game: data.game }
+		await insertComment(params)
 		context.response.status = 201
 		context.response.body = JSON.stringify(
 			{
 				data: {
-					message: 'file uploaded'
+					message: 'comment added'
 				}
 			}
 		)
@@ -216,6 +242,51 @@ router.post('/api/files', async context => {
 				]
 			}
 		)
+	}
+})
+
+router.get('/api/comments/:id', async context => {
+	context.response.headers.set('Allow', 'GET, PUT, DELETE')
+	console.log('GET /api/comments/:id')
+	try {
+		const comment = await queryCommentById(context.params.id)
+		context.host = context.request.url.host
+		comment.user = queryUsername(comment.user)
+		comment.game = queryGameById(comment.game)
+		comment.links =[
+			{
+				herf: `https://${context.host}/api/comments/${comment.id}`,
+				rel: "game",
+				type: "GET"
+			}
+		]
+		context.response.body = JSON.stringify(comment, null, 2)
+	}catch(err) {
+		if(err.message === `comment "${context.params.id}" not found`){
+			context.response.status = 404
+			context.response.body = JSON.stringify(
+				{
+					errors: [
+						{
+							title: '404 not found.',
+							detail: err.message
+						}
+					]
+				}
+			, null, 2)
+		} else {
+			context.response.status = 401
+			context.response.body = JSON.stringify(
+				{
+					errors: [
+						{
+							title: '401 Unauthorized.',
+							detail: err.message
+						}
+					]
+				}
+			, null, 2)
+		}
 	}
 })
 

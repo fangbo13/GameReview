@@ -6,9 +6,9 @@ import { createToken, customiseNavbar, secureGet, loadPage, showMessage } from '
 export async function setup(node) {
 	try {
 		console.log('LOGIN: setup')
-		console.log(node)
-		document.querySelector('header p').innerText = 'Login Page'
 		customiseNavbar(['home', 'login'])
+		console.log(node.querySelector('.toggle-password'))
+		node.querySelector('.toggle-password').addEventListener('click', await toggle)
 		node.querySelector('form').addEventListener('submit', await login)
 	} catch(err) {
 		console.error(err)
@@ -32,5 +32,16 @@ async function login() {
 	} else {
 		document.querySelector('input[name="pass"]').value = ''
 		showMessage(response.json.errors[0].detail)
+	}
+}
+
+async function toggle() {
+	console.log(event.target)
+	event.target.toggleClass("fa-eye fa-eye-slash");
+	let input = togglePassword.attr("toggle");
+	if (input.attr("type") == "password") {
+	input.attr("type", "text");
+	} else {
+	input.attr("type", "password");
 	}
 }

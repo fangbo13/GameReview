@@ -80,7 +80,7 @@ app.use(async (context, next) => {
 				, null, 2)
 				return
 			}
-		} else if (context.request.url.pathname.includes('/games')) {
+		} else if (context.request.url.pathname.includes('/games') || context.request.url.pathname.includes('/comments')) {
 			// call to /api/game
 			if(context.request.headers.get('authorization') === null) {
 				console.log('missing authorization header')

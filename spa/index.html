@@ -3,74 +3,131 @@
 	<head>
 		<meta charset="utf8" />
 		<meta name="viewport" content="width=device-width", initial-scale="1.0" />
-		<title>Single Page App</title>
+		<title>Single Page App for game review</title>
+		<!-- Favicon-->
+        <link rel="icon" type="image/x-icon" href="assets/favicon.ico" />
+        <!-- Font Awesome icons (free version)-->
+        <script src="https://use.fontawesome.com/releases/v5.15.4/js/all.js" crossorigin="anonymous"></script>
+        <!-- Simple line icons-->
+		<link href="https://cdnjs.cloudflare.com/ajax/libs/simple-line-icons/2.5.5/css/simple-line-icons.min.css" rel="stylesheet" />
+        <!-- Google fonts-->
+        <link href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,700,300italic,400italic,700italic" rel="stylesheet" type="text/css" />
 		<link rel="stylesheet" href="style/main.css">
 		<script src="https://cdnjs.cloudflare.com/ajax/libs/showdown/1.4.0/showdown.min.js"></script>
+		<script type="text/javascript" src='js/scripts.js'></script>
 		<script type="module" src="./router.js" defer></script>
 	</head>
-	<body>
-		<aside class="hidden"><p></p></aside>
-		<header>
-			<h1>Single Page App</h1>
-			<p>&nbsp;</p>
+	<body id=page-top>
+		<!-- Navigation-->
+        <nav class="navbar navbar-expand-lg navbar-light fixed-top" id="mainNav">
+            <div class="container px-4 px-lg-5">
+                <a class="navbar-brand" href="/home">Home</a>
+                <div class="collapse navbar-collapse" id="navbarResponsive">
+                    <ul class="navbar-nav ms-auto">
+                        <li class="nav-item"><a class="nav-link" href="/login">Login</a></li>
+						<li class="nav-item"><a class="nav-link" href="/logout">Logout</a></li>
+						<li class="nav-item"><a class="nav-link" href="/game">Add Game</a></li>
+						<li class="nav-item"><a class="nav-link" href="/comment">Add Comment</a></li>
+                    </ul>
+                </div>
+            </div>
+        </nav>
+		<!-- header -->
+		<header class="masthead d-flex align-items-center">
+			<div class="container px-4 px-lg-5 text-center">
+				<h1 class="mb-1">Game Review</h1>
+				<h3 class="mb-5"><em>A community website to review games</em></h3>
+			</div>
 		</header>
-		<nav>
-			<ul>
-				<li><a href="/">Home</a></li>
-				<li><a href="/game">Add Game</a></li>
-				<li><a href="/login">Log in</a></li>
-				<li><a href="/logout">Log out</a></li>
-			</ul>
-		</nav>
-		<main>
-			<article name='games'>
-			</article>
-		</main>
-		<footer>
-			<p>&nbsp;</p>
+
+		<article name="games"></article>
+
+		<footer class="footer text-center">
+			<p class="text-muted small mb-0">Copyright &copy fangh13 2022</p>
 		</footer>
+		<aside class="hidden"><p></p></aside>
 	</body>
 	<template id="home">
 	</template>
 	<template id="login">
-		<form name="login">
-			<p><label for="email">Username</label><br /><input type="text" name="user" placeholder="username" /></p>
-			<p><label for="pass">Password</label><br /><input type="password" name="pass" placeholder="password" /></p>
-			<p><button type="submit">Log in</button></p>
-		</form>
+		<div class="login-container">
+			<div class="row justify-content-center">
+				<div class="col-md-6 text-center mb-5">
+					<h2 class="login-heading-section">Login</h2>
+				</div>
+			</div>
+			<div class="row justify-content-center">
+				<div class="col-md-6 col-lg-4">
+					<div class="login-wrap p-0">
+						<form name="login">
+							<div class="login-form-group">
+								<input type="text" class="login-form-control" name="user" placeholder="Username" required>
+							</div>
+							<div class="login-form-group">
+								<input id="password-field" type="password" class="login-form-control" name="pass" placeholder="Password" required>
+								<span toggle="#password-field" class="fa fa-fw fa-eye field-icon toggle-password"></span>
+							</div>
+							<div class="login-form-group">
+								<button type="submit" class="login-form-control login-btn submit px-3">Log In</button>
+							</div>
+						</form>
+					</div>
+				</div>
+			</div>
+		</div>
 	</template>
 	<template id="logout">
 			<p>Do you want to log out?</p>
 			<p><button>OK</button><button>Cancel</button></p>
 	</template>
 	<template id="game">
-		<form name="game">
-			<p><label for="name">Name</label><br /><input type="text" name="name" placeholder="name" /></p>
-			<p><label for="publisher">Publisher</label><br /><input type="text" name="publisher" placeholder="publisher" /></p>
-			<p>
-				<label for="year">Year</label>
-				<input type="range" name="year" value="50" min="1980" max="2022" />
-				<output name="year_val">1980</output>
-			</p>
-			<p>
-				<label for="description">Description</label>
-				<input type="textarea" name="description" />
-				<article name='markdown'></article>
-			</p>
-			<p>
-				<label for="cover">Cover</label><br />
-				<img id="cover" width="120" height="150">
-				<input type="file" accept="image/*" name="cover" />
-			</p>
-			<input type="hidden" name="username" placeholder="username" value/></p>
-			<p><button type="submit">Submit</button></p>
-		</form>
+		<div class="game-container">
+			<div class="row justify-content-center">
+				<div class="col-md-6 text-center mb-5">
+					<h2 class="game-heading-section">Add Game</h2>
+				</div>
+			</div>
+			<div class="row justify-content-center">
+				<div class="col-md-10 col-lg-10">
+					<div class="game-wrap p-0">
+						<form name="game">
+							<div class="game-form-group">
+								<input type="text" class="game-form-control" name="name" placeholder="name" required>
+							</div>
+							<div class="game-form-group">
+								<input type="text" class="game-form-control" name="publisher" placeholder="publisher" required>
+							</div>
+							<p>
+								<label for="year">Year</label>
+								<input type="range" name="year" value="50" min="1980" max="2022" />
+								<output name="year_val">1980</output>
+							</p>
+							<div class="game-form-group">
+								<textarea name="description" placeholder="description" required></textarea>
+							</div>
+							<p>
+								<article name='markdown'></article>
+							</p>
+							<p>
+								<input type="file" accept="image/*" name="cover" />
+							</p>
+							<input type="hidden" name="username" placeholder="username" value/></p>
+							<p><button type="submit" class='login-form-control game-btn submit px-3'>Submit</button></p>
+						</form>
+					</div>
+				</div>
+			</div>
 	</template>
 
 	<template id="games">
-		<section>
-			<h2></h2>
-			<p></p>
+		<section class="content-section" id="games">
+			<div class="container px-4 px-lg-5">
+                <div class="content-section-heading text-center">
+                    <h3 class="text-secondary mb-0">Games</h3>
+                    <h2 class="mb-5">Games Information</h2>
+                </div>
+				<div class="row gx-0"></div>
+			</div>
 		</section>
 	</template>
 </html>

@@ -1,6 +1,8 @@
 
 /* this is where we set up our media queries */
 
-@import url(./material.css) (pointer: coarse);
+@import url(./material.css) (pointer: fine);
 
 @import url(./custom.css) (pointer: fine);
+
+/* @import url(./styles.css) (pointer: fine); */

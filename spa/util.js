@@ -60,10 +60,10 @@ export function highlightNav(page) {
 export function customiseNavbar(items) {
 	document.querySelectorAll('nav li').forEach(element => {
 		const link = element.querySelector('a').href.replace(`${window.location.origin}/`, '') || 'home'
-		if(items.includes(link)) {
-			element.style.display = 'block'
-		} else {
+		if(!items.includes(link)) {
 			element.style.display = 'none'
+		}else {
+			element.style.display = 'block'
 		}
 	})
 	
