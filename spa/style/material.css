@@ -808,27 +808,6 @@ aside {
 /* 	background-color: #BBB; */
 }
 
-/* =========== MAIN =========== */
-
-main {
-	margin: 1em;
-	margin-top: 1em;
-}
-
-main > article {
-	max-width: 600px;
-	margin: auto;
-	background-color: var(--colorSurface);
-	box-shadow : 2px 2px 2px lightgrey;
-	margin-top: 1em;
-	padding: 1em;
-}
-
-main p {
-	font-size: 0.8em;
-	color: var(--colorOnBackground);
-}
-
 /* =========== LOGIN FORM =========== */
 .login-container {
 	background-color: #1f2029;
@@ -936,6 +915,86 @@ main p {
   box-shadow: 0 8px 24px 0 rgba(16,39,112,.2);
 }
 
+/* =========== LOGIN OUT =========== */
+.logout-container {
+	background-color: #1f2029;
+	height: auto;
+}
+
+.logout-heading-section {
+	margin-top: 8rem;
+	margin-bottom: 2rem;
+  	font-family: "Lato", Arial, sans-serif ;
+  	color: #c4c3ca;
+}
+
+.logout-wrap {
+	margin-bottom: 5rem;
+  	position: relative;
+  	color: rgba(255, 255, 255, 0.9); 
+}
+
+.logout-wrap h3 {
+    font-weight: 300;
+    color: #fff; 
+}
+
+.logout-alert {
+  font-size: 1rem;
+  position: relative; 
+  margin-bottom: 2rem;
+}
+
+@media (prefers-reduced-motion: reduce) {
+    .logout-alert {
+      -webkit-transition: none;
+      -o-transition: none;
+      transition: none; 
+	} 
+}
+
+.logout-btn{  
+	border-radius: 4px;
+	height: 44px;
+	width: 40%;
+	font-size: 13px;
+	font-weight: 600;
+	text-transform: uppercase;
+	-webkit-transition : all 200ms linear;
+	transition: all 200ms linear;
+	margin: 2rem 0;
+	padding: 0 30px;
+	letter-spacing: 1px;
+	display: -webkit-inline-flex;
+	display: -ms-inline-flexbox;
+	display: inline-flex;
+	-webkit-align-items: center;
+	-moz-align-items: center;
+	-ms-align-items: center;
+	align-items: center;
+	-webkit-justify-content: center;
+	-moz-justify-content: center;
+	-ms-justify-content: center;
+	justify-content: center;
+	-ms-flex-pack: center;
+	text-align: center;
+	border: none;
+	background-color: #ffeba7;
+	color: #102770;
+	box-shadow: 0 8px 24px 0 rgba(255,235,167,.2);
+}
+.logout-btn:active,
+.logout-btn:focus{  
+  background-color: #102770;
+  color: #ffeba7;
+  box-shadow: 0 8px 24px 0 rgba(16,39,112,.2);
+}
+.logout-btn:hover{  
+  background-color: #102770;
+  color: #ffeba7;
+  box-shadow: 0 8px 24px 0 rgba(16,39,112,.2);
+}
+
 /* ========== Add Game Form ========== */
 .game-container {
 	background-color: #1f2029;
@@ -967,8 +1026,8 @@ main p {
 
 textarea{
 	background: #f8f9fa;
-	height: 80px;
-	width: 40%;
+	height: 15rem;
+	width: 100%;
 	border: 1px solid transparent;
 	border-radius: 10px;
 	padding-left: 20px;
@@ -981,7 +1040,7 @@ textarea{
 .game-form-control {
   background: #f8f9fa;
   height: 40px;
-  width: 40%;
+  width: 100%;
   border: 1px solid transparent;
   border-radius: 40px;
   margin: 0 auto;
@@ -1015,15 +1074,34 @@ textarea{
 	border-color: rgba(255, 255, 255, 0.4); 
 }
 
+.game-description {
+  display: flex;
+}
+
+.game-description .markdown {
+  background-color: #f8f9fa;
+  color: #000;
+  height: 15rem;
+  border: 1px solid transparent;
+	border-radius: 10px;
+  margin: 1rem;
+	padding-left: 20px;
+	padding-right: 20px;
+	-webkit-transition: 0.3s;
+	-o-transition: 0.3s;
+	transition: 0.3s;
+}
+
 .game-btn{  
 	border-radius: 4px;
 	height: 44px;
-	width: 90%;
+	width: 40%;
 	font-size: 13px;
 	font-weight: 600;
 	text-transform: uppercase;
 	-webkit-transition : all 200ms linear;
 	transition: all 200ms linear;
+  margin:0 auto;
 	padding: 0 30px;
 	letter-spacing: 1px;
 	display: -webkit-inline-flex;
@@ -1054,6 +1132,113 @@ textarea{
   background-color: #102770;
   color: #ffeba7;
   box-shadow: 0 8px 24px 0 rgba(16,39,112,.2);
+}
+
+/* ========== Game info ========== */
+
+.content-section {
+  padding-top: 4.5rem;
+  padding-bottom: 4.5rem;
+}
+
+.content-section-heading h2, .content-section-heading .h2 {
+  font-size: 2rem;
+}
+.content-section-heading h3, .content-section-heading .h3 {
+  font-size: 0.75rem;
+  text-transform: uppercase;
+}
+
+.text-secondary {
+  --bs-text-opacity: 1;
+  color: #ecb807;
+}
+
+.gameinfo {
+  padding-top: 0.5rem;
+  padding-bottom: 0.5rem;
+  color: #6c757d;
+  text-align: left;
+}
+
+.game-item {
+  display: block;
+  position: relative;
+  overflow: hidden;
+  max-width: 530px;
+  margin: auto auto 1rem;
+}
+.game-item .gameinfo {
+  display: flex;
+  height: 100%;
+  width: 100%;
+  background-color: rgba(33, 37, 41, 0.2);
+  position: absolute;
+  left: 0;
+  bottom: 0;
+  z-index: 1;
+}
+.game-item .gameinfo .gameinfo-content {
+  color: #fff;
+  margin: auto 3rem 3rem;
+}
+.game-item .gameinfo .gameinfo-content h2, .game-item .gameinfo .gameinfo-content .h2 {
+  font-size: 0.8rem;
+  text-transform: uppercase;
+}
+.game-item .gameinfo .gameinfo-content p {
+  font-weight: 300;
+  font-size: 1.2rem;
+}
+
+@media (min-width: 992px) {
+  .game-item {
+    max-width: none;
+    margin: 0;
+  }
+  .game-item .gameinfo {
+    transition: background-color 0.7s, -webkit-clip-path 0.25s ease-out;
+    transition: clip-path 0.25s ease-out, background-color 0.7s;
+    transition: clip-path 0.25s ease-out, background-color 0.7s, -webkit-clip-path 0.25s ease-out;
+    -webkit-clip-path: inset(0px);
+            clip-path: inset(0px);
+  }
+  .gameinfo-item .gameinfo .gameinfo-content {
+    transition: opacity 0.25s;
+    margin-left: 5rem;
+    margin-right: 5rem;
+    margin-bottom: 5rem;
+  }
+  .game-item img {
+    transition: -webkit-clip-path 0.25s ease-out;
+    transition: clip-path 0.25s ease-out;
+    transition: clip-path 0.25s ease-out, -webkit-clip-path 0.25s ease-out;
+    -webkit-clip-path: inset(-1px);
+            clip-path: inset(-1px);
+  }
+  .game-item:hover img {
+    -webkit-clip-path: inset(2rem);
+            clip-path: inset(2rem);
+  }
+  .game-item:hover .gameinfo {
+    background-color: rgba(29, 128, 159, 0.9);
+    -webkit-clip-path: inset(2rem);
+            clip-path: inset(2rem);
+  }
+}
+
+.img-fluid {
+  max-width: 100%;
+  width: 100%;
+}
+
+.img-thumbnail {
+  padding: 0.25rem;
+  background-color: #fff;
+  border: 1px solid #dee2e6;
+  border-radius: 0.25rem;
+  max-width: 100%;
+  height: auto;
 }
 
 /* ========== FOOTER ========== */

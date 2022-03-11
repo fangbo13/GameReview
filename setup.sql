@@ -19,7 +19,7 @@ INSERT INTO roles(name, description) VALUES("guest", "user who has no access");
 
 CREATE TABLE IF NOT EXISTS users (
   id MEDIUMINT UNSIGNED AUTO_INCREMENT PRIMARY KEY,
-  username VARCHAR(25) NOT NULL,
+  username VARCHAR(25) UNIQUE NOT NULL,
   password VARCHAR(70) NOT NULL,
   email VARCHAR(70),
   profile VARCHAR(140),
@@ -41,7 +41,7 @@ INSERT INTO users(username, password, profile, role_id)
 
 CREATE TABLE IF NOT EXISTS games (
   id MEDIUMINT UNSIGNED AUTO_INCREMENT PRIMARY KEY,
-  name VARCHAR(25) NOT NULL,
+  name VARCHAR(25) UNIQUE NOT NULL,
   publisher VARCHAR(70) NOT NULL,
   year VARCHAR(4) NOT NULL,
   add_date DATE NOT NULL,

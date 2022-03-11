@@ -4,9 +4,7 @@
 		<meta charset="utf8" />
 		<meta name="viewport" content="width=device-width", initial-scale="1.0" />
 		<title>Single Page App for game review</title>
-		<!-- Favicon-->
-        <link rel="icon" type="image/x-icon" href="assets/favicon.ico" />
-        <!-- Font Awesome icons (free version)-->
+		<!-- Font Awesome icons (free version)-->
         <script src="https://use.fontawesome.com/releases/v5.15.4/js/all.js" crossorigin="anonymous"></script>
         <!-- Simple line icons-->
 		<link href="https://cdnjs.cloudflare.com/ajax/libs/simple-line-icons/2.5.5/css/simple-line-icons.min.css" rel="stylesheet" />
@@ -77,8 +75,24 @@
 		</div>
 	</template>
 	<template id="logout">
-			<p>Do you want to log out?</p>
-			<p><button>OK</button><button>Cancel</button></p>
+		<div class="logout-container">
+			<div class="row justify-content-center">
+				<div class="col-md-6 text-center mb-5">
+					<h2 class="logout-heading-section">Log Out</h2>
+				</div>
+			</div>
+			<div class="row justify-content-center">
+				<div class="col-md-6 col-lg-4 text-center">
+					<div class="logout-wrap p-0">
+						<p class="logout-alert">Do you want to log out?</p>
+						<div class="login-form-group">
+							<button type="submit" class="logout-btn submit px-3">OK</button>
+							<button type="submit" class="logout-btn submit px-3">Cancel</button>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
 	</template>
 	<template id="game">
 		<div class="game-container">
@@ -88,7 +102,7 @@
 				</div>
 			</div>
 			<div class="row justify-content-center">
-				<div class="col-md-10 col-lg-10">
+				<div class="col-md-6 col-lg-6">
 					<div class="game-wrap p-0">
 						<form name="game">
 							<div class="game-form-group">
@@ -102,17 +116,23 @@
 								<input type="range" name="year" value="50" min="1980" max="2022" />
 								<output name="year_val">1980</output>
 							</p>
-							<div class="game-form-group">
-								<textarea name="description" placeholder="description" required></textarea>
+							<div class="game-description">
+								<div class="col-md-6">
+									<div class="game-form-group">
+										<textarea name="description" placeholder="description" required></textarea>
+									</div>
+								</div>
+								<div class="col-md-6 markdown">
+									<article name='markdown'></article>
+								</div>
 							</div>
 							<p>
-								<article name='markdown'></article>
-							</p>
-							<p>
-								<input type="file" accept="image/*" name="cover" />
+								<input id="cover" type="file" accept="image/*" name="cover" />
 							</p>
 							<input type="hidden" name="username" placeholder="username" value/></p>
-							<p><button type="submit" class='login-form-control game-btn submit px-3'>Submit</button></p>
+							<div style="text-align:center">
+								<button type="submit" class='login-form-control game-btn submit px-3'>Submit</button>
+							</div>
 						</form>
 					</div>
 				</div>
@@ -126,7 +146,21 @@
                     <h3 class="text-secondary mb-0">Games</h3>
                     <h2 class="mb-5">Games Information</h2>
                 </div>
-				<div class="row gx-0"></div>
+				<div class="row gx-0">
+					<template id="games-info">
+						<div class="col-lg-4">
+							<a class="game-item" href="#">
+								<div class="gameinfo">
+									<div class="gameinfo-content">
+										<div class="h2"></div>
+										<div class="mb-0"></div>
+									</div>
+								</div>
+								<img class="img-fluid" src="">
+							</a>
+						</div>
+					</template>	
+				</div>
 			</div>
 		</section>
 	</template>

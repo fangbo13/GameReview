@@ -73,17 +73,16 @@ async function fileExists(path) {
   }
 }
 
-export function saveFile(base64String, username) {
+export function saveFile(base64String, filename) {
 	console.log('save file')
 	const [ metadata, base64Image ] = base64String.split(';base64,')
 	console.log(metadata)
 	const extension = metadata.split('/').pop()
-	console.log(extension)
-	const filename = `${username}-${Date.now()}.${extension}`
-	console.log(filename)
-	Base64.fromBase64String(base64Image).toFile(`./spa/uploads/${filename}`)
+	const name = `${filename}.${extension}`
+	console.log(name)
+	Base64.fromBase64String(base64Image).toFile(`./spa/uploads/cover/${name}`)
 	console.log('file saved')
-	return filename
+	return name
 }
 
 export async function getEtag(path) {

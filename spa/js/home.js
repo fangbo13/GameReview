@@ -25,6 +25,7 @@ export async function setup(node) {
 		if(token === null) customiseNavbar(['home', 'login']) //navbar if logged out
 		else customiseNavbar(['home', 'game', 'logout']) // navbar if logged in
 		// add content to the page
+		// node.querySelector('template#games').querySelector('a').addEventListener('click', await detail)
 		await addContent(node)
 	} catch(err) {
 		console.error(err)
@@ -42,11 +43,23 @@ async function addContent(node) {
 		},
 	})
 	const games = await response.json()
+	console.log(document.querySelector('template#games'))
+	console.log(document.querySelector('template#games').content)
 	const template = document.querySelector('template#games')
+	const div = template.content.querySelector('.gx-0')
+	const template_gameinfo = template.content.querySelector('template#games-info')
 	for(const game of games) {
-		const fragment = template.content.cloneNode(true)
-		fragment.querySelector('h2').innerText = game.name
-		fragment.querySelector('p').innerText = game.year
-		node.appendChild(fragment)
+		const fragment = template_gameinfo.content.querySelector('.col-lg-4').cloneNode(true)
+		fragment.querySelector('.gameinfo .h2').innerText = game.name
+		fragment.querySelector('.gameinfo .mb-0').innerText = game.year
+		fragment.querySelector('.img-fluid').src = 'uploads/cover/' + game.cover
+		fragment.querySelector('a').href="javascript:void(0);" 
+		fragment.querySelector('a').addEventListener('click', await detail)
+		div.appendChild(fragment)
 	}
+	node.appendChild(template.content)
+}
+
+async function detail() {
+	alert('continue')
 }

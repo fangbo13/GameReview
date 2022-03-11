@@ -1,8 +1,10 @@
 /* game.js */
 
-import { customiseNavbar, loadPage, showMessage } from '../util.js'
+import { customiseNavbar, file2DataURI, loadPage, showMessage } from '../util.js'
 
 const converter = new showdown.Converter({'tables': true, 'tasklists': true, 'strikethrough': true})
+
+let file = null
 
 export async function setup(node) {
 	console.log('GAME: setup')
@@ -14,8 +16,8 @@ export async function setup(node) {
 		node.querySelector('input[name=username]').value = localStorage.getItem('username')
 		node.querySelector('form').addEventListener('submit', await add)
 		node.querySelector('input[name=year]').addEventListener('input', await slide)
-		node.querySelector('input[type=textarea]').addEventListener('input', await markdownEditor)
-
+		node.querySelector('textarea').addEventListener('input', await markdownEditor)
+		node.querySelector('input[type=file]').addEventListener('change', await upload)
 	}catch(err) {
 		console.error(err)
 	}
@@ -39,6 +41,7 @@ async function add() {
 	console.log('form submitted')
 	const formData = new FormData(event.target)
 	const data = Object.fromEntries(formData.entries())
+	console.log(data)
 	const token = localStorage.getItem('authorization')
 	console.log('making call to post')
 	const response = await fetch('/api/games', {
@@ -57,5 +60,16 @@ async function add() {
 	} else {
 		const error = await response.json()
 		showMessage(error.errors[0].detail)
+	}
+}
+
+async function upload() {
+	file = document.querySelector('#cover').files[0]
+	switch(file.type) {
+		case 'image/jpg':case 'image/png':case 'image/jpeg':
+			file.base64 = await file2DataURI(file)
+			break
+		default:
+			showMessage('Unsupport file type')
 	}
 }
