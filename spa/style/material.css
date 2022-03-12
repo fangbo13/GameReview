@@ -1241,6 +1241,13 @@ textarea{
   height: auto;
 }
 
+/* ========== Detail info ========== */
+.detail-info {
+  display: flex;
+  padding-left: 5rem;
+  padding-right: 5rem;
+}
+
 /* ========== FOOTER ========== */
 footer.footer {
   padding-top: 5rem;

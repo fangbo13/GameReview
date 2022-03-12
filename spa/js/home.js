@@ -1,7 +1,7 @@
 
 /* home.js */
 
-import { customiseNavbar } from '../util.js'
+import { customiseNavbar, loadPage } from '../util.js'
 // import { Ajv } from './ajv.min.js'
 
 //schema for json
@@ -43,8 +43,6 @@ async function addContent(node) {
 		},
 	})
 	const games = await response.json()
-	console.log(document.querySelector('template#games'))
-	console.log(document.querySelector('template#games').content)
 	const template = document.querySelector('template#games')
 	const div = template.content.querySelector('.gx-0')
 	const template_gameinfo = template.content.querySelector('template#games-info')
@@ -55,11 +53,13 @@ async function addContent(node) {
 		fragment.querySelector('.img-fluid').src = 'uploads/cover/' + game.cover
 		fragment.querySelector('a').href="javascript:void(0);" 
 		fragment.querySelector('a').addEventListener('click', await detail)
+		fragment.querySelector('.gameinfo').id = game.id
 		div.appendChild(fragment)
 	}
 	node.appendChild(template.content)
 }
 
 async function detail() {
-	alert('continue')
+	localStorage.setItem('game', event.target.id)
+	loadPage('detail')
 }
