@@ -14,6 +14,14 @@ const schema = {
   }
 }
 
+const options = {
+    'tables': true,
+    'tasklists': true,
+    'strikethrough': true
+}
+
+const converter = new showdown.Converter(options)
+
 // const validate = ajv.compile(schema)
 
 export async function setup(node) {
@@ -37,6 +45,12 @@ export async function setup(node) {
 		node.querySelector('img').src = "uploads/cover/" + game.cover
 		node.querySelector('.h2').innerText = game.name
 		node.querySelector('.mb-0[name=publisher]').innerText = game.publisher
+		node.querySelector('.mb-0[name=year]').innerText = game.year
+		const html = converter.makeHtml(game.description)
+		console.log(html)
+		node.querySelector('.mb-0[name=description]').innerHTML = converter.makeHtml(game.description)
+		node.querySelector('.mb-0[name=date]').innerText = game.add_date
+		node.querySelector('.mb-0[name=user]').innerText = game.user
 	} catch(err) {
 		console.error(err)
 	}
