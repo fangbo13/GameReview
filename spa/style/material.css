@@ -1252,12 +1252,17 @@ textarea{
   padding: 3rem;
 }
 
+.detail-label {
+  font-weight: 2.5vw;
+  color: #ecb807;
+}
+
 .md h1{
   font-size: 1.5vw;
   font-weight: 600;
   margin: 24px 0 16px;
   padding: 0.3em 0 0.3em 0;
-  border-bottom: 1px solid #eaeaea;
+  /* border-bottom: 1px solid #eaeaea; */
   color: #2e2e2e;
   float: none;
 }
