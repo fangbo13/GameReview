@@ -142,7 +142,8 @@ router.get('/api/games/:id', async context => {
 	try {
 		const game = await queryGameById(context.params.id)
 		context.host = context.request.url.host
-		game.user = queryUsername(game.user)
+		game.user = await queryUsername(game.user)
+		// console.log(game.add_date.format('YYYY-MM-DD'))
 		game.links =[
 			{
 				herf: `https://${context.host}/api/games/${game.id}`,

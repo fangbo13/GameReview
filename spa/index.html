@@ -22,6 +22,7 @@
                 <a class="navbar-brand" href="/home">Home</a>
                 <div class="collapse navbar-collapse" id="navbarResponsive">
                     <ul class="navbar-nav ms-auto">
+						<li class="nav-item"><a class="nav-link" href="/home">Home</a></li>
                         <li class="nav-item"><a class="nav-link" href="/login">Login</a></li>
 						<li class="nav-item"><a class="nav-link" href="/logout">Logout</a></li>
 						<li class="nav-item"><a class="nav-link" href="/game">Add Game</a></li>
@@ -156,10 +157,66 @@
 										<div class="mb-0"></div>
 									</div>
 								</div>
-								<img class="img-fluid" src="">
+								<img class="img-fluid">
 							</a>
 						</div>
 					</template>	
+				</div>
+			</div>
+		</section>
+	</template>
+
+	<template id="detail">
+		<section class="content-section">
+			<div class="container px-3 px-lg-5">
+                <div class="content-section-heading text-center">
+                    <h3 class="text-secondary mb-0">Game</h3>
+                    <h2 class="mb-5">Game Information</h2>
+                </div>
+				<div class="row gx-0">
+					<div class="detail-info">
+						<div class="col-lg-3">
+							<img class="img-fluid">
+						</div>
+						<div class="col-lg-8 game-detail-info">
+							<!-- <div class="h2"></div>
+							<div class="mb-0" name="publisher"></div>
+							<div class="mb-0" name="year"></div>
+							<div class="mb-0 md" name="description"></div>
+							<div class="mb-0" name="date"></div>
+							<div class="mb-0" name="user"></div> -->
+
+							<table class="table custom-table">
+							<tbody>
+            					<tr>
+									<td class="detail-label">Name</td>
+									<td><div class="h2"></div></td>
+								</tr>
+								<tr>
+									<td class="detail-label">Publisher</td>
+									<td><div class="mb-0" name="publisher"></div></td>
+								</tr>
+								<tr>
+									<td class="detail-label">Year</td>
+									<td><div class="mb-0" name="year"></div></td>
+								</tr>
+								<tr>
+									<td class="detail-label">Description</td>
+									<td><div class="mb-0 md" name="description"></div></td>
+								</tr>
+								<tr>
+									<td class="detail-label">Date</td>
+									<td><div class="mb-0" name="date"></div></td>
+								</tr>
+								<tr>
+									<td class="detail-label">User</td>
+									<td><div class="mb-0" name="user"></div></td>
+								</tr>
+								</tr>
+							</tbody>
+						</table>
+						</div>
+					</div>
 				</div>
 			</div>
 		</section>

@@ -1241,6 +1241,66 @@ textarea{
   height: auto;
 }
 
+/* ========== Detail info ========== */
+.detail-info {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.game-detail-info {
+  padding: 3rem;
+}
+
+.detail-label {
+  font-weight: 2.5vw;
+  color: #ecb807;
+}
+
+.md h1{
+  font-size: 1.5vw;
+  font-weight: 600;
+  margin: 24px 0 16px;
+  padding: 0.3em 0 0.3em 0;
+  /* border-bottom: 1px solid #eaeaea; */
+  color: #2e2e2e;
+  float: none;
+}
+
+.md h1:first-child{
+  margin-top: 0
+}
+
+.md h2{
+  font-size: 1.4vw;
+  font-weight: 600;
+  margin: 24px 0 16px;
+  padding-bottom: 0.3em;
+  border-bottom: 1px solid #eaeaea;
+  color: #2e2e2e;
+}
+
+
+.md h3 {
+	font-size: 1.3vw;
+  margin: 24px 0 16px;
+}
+
+.md h4 {
+	font-size: 1.2vw;
+  margin: 24px 0 16px;
+}
+
+.md h5 {
+	font-size: 1.0vw;
+  margin: 24px 0 16px;
+}
+
+.md h6 {
+	font-size: 0.95vw;
+  margin: 24px 0 16px;
+}
+
 /* ========== FOOTER ========== */
 footer.footer {
   padding-top: 5rem;
