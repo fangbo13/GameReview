@@ -22,7 +22,7 @@ This will configure the box ready for you to start development.
 To run the project:
 
 ```
-$ deno run --allow-all --unstable index.js
+$ deno run --allow-all index.js
 ```
 
 ## Accounts

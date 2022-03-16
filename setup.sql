@@ -3,6 +3,7 @@
 CREATE USER IF NOT EXISTS websiteuser IDENTIFIED BY 'websitepassword';
 GRANT INSERT, SELECT, UPDATE, DELETE ON website.* TO websiteuser;
 
+<<<<<<< HEAD
 DROP TABLE IF EXISTS comments;
 DROP TABLE IF EXISTS games;
 DROP TABLE IF EXISTS users;
@@ -65,3 +66,15 @@ CREATE TABLE IF NOT EXISTS comments (
   constraint FOREIGN KEY (user) REFERENCES users(id),
   constraint FOREIGN KEY (game) REFERENCES games(id)
 )
+=======
+DROP TABLE IF EXISTS accounts;
+
+CREATE TABLE IF NOT EXISTS accounts (
+  id MEDIUMINT UNSIGNED AUTO_INCREMENT PRIMARY KEY,
+  user VARCHAR(25) NOT NULL,
+  pass VARCHAR(70) NOT NULL
+);
+
+INSERT INTO accounts(user, pass)
+	VALUES("doej", "$2b$10$gL33obKAFUT5DK3pEbh72OIHztsWBniBBh.PdeKOrF1yr5KFAsdZO");
+>>>>>>> 9439224 (templates updated)

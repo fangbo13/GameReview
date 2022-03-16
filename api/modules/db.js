@@ -1,7 +1,7 @@
 
 /* db.js */
 
-import { Client } from 'https://deno.land/x/mysql/mod.ts'
+import { Client } from 'https://deno.land/x/mysql@v2.10.2/mod.ts'
 
 const home = Deno.env.get('HOME')
 console.log(`HOME: ${home}`)
