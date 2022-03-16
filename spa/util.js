@@ -95,8 +95,8 @@ export async function secureGet(url, token) {
 		method: 'GET',
 		headers: {
 			'authorization': token,
-			'Content-Type': 'application/json',
-			'Accept': 'application/json'
+			'Content-Type': 'application/vnd.api+json',
+			'Accept': 'application/vnd.api+json'
 		}
 	}
 	console.log(options)

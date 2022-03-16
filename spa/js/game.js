@@ -48,7 +48,7 @@ async function add() {
 		method: 'POST', // or 'PUT'
 		headers: {
 			'authorization': token,
-			'Content-Type': 'application/json',
+			'Content-Type': 'application/vnd.api+json',
 			'host': 'https://taxi-mambo-8080.codio-box.uk/'
 		},
 		body: JSON.stringify(data)

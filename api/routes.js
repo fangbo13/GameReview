@@ -113,6 +113,7 @@ router.post('/api/games', async context =>  {
 		const params = {name: data.name, publisher: data.publisher, year: data.year, add_date: moment().format('YYYY-MM-DD'),
 						description: data.description, cover: covername, user: userid }
 		await insertGame(params)
+		console.log('game added')
 		context.response.status = 201
 		context.response.body = JSON.stringify(
 			{
