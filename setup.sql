@@ -45,7 +45,7 @@ CREATE TABLE IF NOT EXISTS games (
   publisher VARCHAR(70) NOT NULL,
   year VARCHAR(4) NOT NULL,
   add_date DATE NOT NULL,
-  description VARCHAR(140),
+  description VARCHAR(1400),
   cover VARCHAR(140),
   user MEDIUMINT UNSIGNED,
   constraint FOREIGN KEY (user) REFERENCES users(id)
