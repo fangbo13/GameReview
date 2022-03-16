@@ -82,11 +82,12 @@ async function authHeaderPresent(context, next) {
 }
 
 async function rolesChecked(context, next) {
+	console.log('middleware: rolesChecked')
 	const pathname = context.request.url.pathname
 	const method = context.request.method
 	const token = context.request.headers.get('authorization')
-	if (method === 'POST' && (pathname.includes('/games') || pathname.includes('/comments'))) {
-			// call to /api/games or /api/comments
+	if (method === 'POST' && (pathname.includes('/games') || pathname.includes('/reviews'))) {
+			// call to /api/games or /api/reviews
 			// role-based access control and Authentication uses JWT, 
 			const token = context.request.headers.get('authorization')
 			try {
@@ -121,23 +122,41 @@ async function rolesChecked(context, next) {
 				return
 			}
 	}
+	await next()
+	return
 }
 
 async function dataValidated(context, next) { 
+	console.log('middleware: dataValidated')
 	const pathname = context.request.url.pathname
 	const method = context.request.method
-	const token = context.request.headers.get('authorization')
-	if (method === 'POST' && (pathname.includes('/games') || pathname.includes('/comments'))) {
+	if (method === 'POST' && (pathname.includes('/games') || pathname.includes('/reviews'))) {
 		try {
-				const schemas = JSON.stringify(context.request.body())
-			} catch(err) {
-				console.log('invalid JSON')
-			}
+			const body = await context.request.body()
+			const data = await body.value
+			const schemas = JSON.stringify(data)
+		} catch(err) {
+			console.log('invalid JSON')
+			context.response.status = 400
+			context.response.body = JSON.stringify(
+				{
+					errors: [
+						{
+							title: '400 JSON parse',
+							detail: err.message
+						}
+					]
+				}
+			, null, 2)
+			return
+		}
 	}
+	await next()
+	return
 }
 
 async function validCredentials(context, next) {
-
+	console.log('middleware: validCredentials')
 	const path = context.request.url.pathname
 	const method = context.request.method
 	const token = context.request.headers.get('authorization')
@@ -178,8 +197,8 @@ async function validCredentials(context, next) {
 			return
 		}
 	}
-
 	await next()
+	return
 }
 
 async function staticFiles(context, next) {
@@ -226,6 +245,8 @@ async function errorHandler(context, next) {
 app.use(errorHandler)
 app.use(checkContentType)
 app.use(authHeaderPresent)
+app.use(rolesChecked)
+app.use(dataValidated)
 app.use(validCredentials)
 app.use(staticFiles)
 app.use(router.routes())
