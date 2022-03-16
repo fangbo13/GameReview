@@ -74,8 +74,8 @@ router.get('/api/games', async context => {
 	try {
 		const games = await queryallGames()
 		context.host = context.request.url.host
-		games.forEach(game => {
-			game.user = queryUsername(game.user)
+		for(let game of games) {
+			game.user = await queryUsername(game.user)
 			game.links =[
 				{
 					herf: `https://${context.host}/api/games/${game.id}`,
@@ -84,7 +84,7 @@ router.get('/api/games', async context => {
 				}
 			]
 			// delete game.id
-		})
+		}
 		context.response.body = JSON.stringify(games, null, 2)
 	}catch(err) {
 		context.response.status = 401
@@ -190,6 +190,8 @@ router.get('/api/reviews', async context => {
 		context.host = context.request.url.host
 		for(let review of reviews) {
 			review.user = await queryUsername(review.user)
+			console.log(review.user)
+			review.game = await queryGameById(review.game)
 			review.links =[
 				{
 					herf: `https://${context.host}/api/reviews/${review.id}`,
@@ -197,8 +199,9 @@ router.get('/api/reviews', async context => {
 					type: "GET"
 				}
 			]
-			// delete review.id
 		}
+			// delete review.id
+		console.log(reviews)
 		context.response.body = JSON.stringify(reviews, null, 2)
 	}catch(err) {
 		context.response.status = 401
@@ -222,8 +225,15 @@ router.post('/api/reviews', async context =>  {
 		const body = await context.request.body()
 		const data = await body.value
 		const userid = await queryUserid(data.username)
-		const params = {content: data.content, date: moment().format('YYYY-MM-DD'), score: data.scoer, country: data.country, region: data.region,
+		if(data.country === undefined) {
+			data.country = ""
+		} 
+		if(data.region === undefined) {
+			data.region = ""
+		} 
+		const params = {content: data.content, date: moment().format('YYYY-MM-DD'), score: data.score, country: data.country, region: data.region,
 						user: userid, game: data.game }
+		console.log(params)
 		await insertReview(params)
 		context.response.status = 201
 		context.response.body = JSON.stringify(
@@ -254,11 +264,11 @@ router.get('/api/reviews/:id', async context => {
 	try {
 		const review = await queryReviewById(context.params.id)
 		context.host = context.request.url.host
-		review.user = queryUsername(review.user)
+		review.user = await queryUsername(review.user)
 		review.links =[
 			{
 				herf: `https://${context.host}/api/reviews/${review.id}`,
-				rel: "reviews",
+				rel: "review",
 				type: "GET"
 			}
 		]

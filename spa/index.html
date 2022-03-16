@@ -8,9 +8,13 @@
         <script src="https://use.fontawesome.com/releases/v5.15.4/js/all.js" crossorigin="anonymous"></script>
         <!-- Simple line icons-->
 		<link href="https://cdnjs.cloudflare.com/ajax/libs/simple-line-icons/2.5.5/css/simple-line-icons.min.css" rel="stylesheet" />
+		<!-- vendor -->
+		<link href="https://unpkg.com/aos@2.3.1/dist/aos.css" rel="stylesheet">
         <!-- Google fonts-->
         <link href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,700,300italic,400italic,700italic" rel="stylesheet" type="text/css" />
+		
 		<link rel="stylesheet" href="style/main.css">
+		
 		<script src="https://cdnjs.cloudflare.com/ajax/libs/showdown/1.4.0/showdown.min.js"></script>
 		<script type="text/javascript" src='js/scripts.js'></script>
 		<script type="module" src="./router.js" defer></script>
@@ -26,7 +30,6 @@
                         <li class="nav-item"><a class="nav-link" href="/login">Login</a></li>
 						<li class="nav-item"><a class="nav-link" href="/logout">Logout</a></li>
 						<li class="nav-item"><a class="nav-link" href="/game">Add Game</a></li>
-						<li class="nav-item"><a class="nav-link" href="/comment">Add Comment</a></li>
                     </ul>
                 </div>
             </div>
@@ -36,6 +39,7 @@
 			<div class="container px-4 px-lg-5 text-center">
 				<h1 class="mb-1">Game Review</h1>
 				<h3 class="mb-5"><em>A community website to review games</em></h3>
+				<aside class="hidden"><p></p></aside>
 			</div>
 		</header>
 
@@ -44,7 +48,10 @@
 		<footer class="footer text-center">
 			<p class="text-muted small mb-0">Copyright &copy fangh13 2022</p>
 		</footer>
+<<<<<<< HEAD
 		<aside class="hidden"><p></p></aside>
+=======
+>>>>>>> main
 	</body>
 	<template id="home">
 	</template>
@@ -124,7 +131,7 @@
 									</div>
 								</div>
 								<div class="col-md-6 markdown">
-									<article name='markdown'></article>
+									<article class="md" name='markdown'></article>
 								</div>
 							</div>
 							<p>
@@ -186,7 +193,7 @@
 							<div class="mb-0" name="date"></div>
 							<div class="mb-0" name="user"></div> -->
 
-							<table class="table custom-table">
+							<table class="table custom-table table-bordered">
 							<tbody>
             					<tr>
 									<td class="detail-label">Name</td>
@@ -215,6 +222,60 @@
 								</tr>
 							</tbody>
 						</table>
+						</div>
+					</div>
+				</div>
+			</div>
+		</section>
+		<section class="content-section">
+			<div class="container px-4 px-lg-5">
+				<div class="content-section-heading text-center">
+					<h3 class="text-secondary mb-0">Games</h3>
+					<h2 class="mb-5">Games Review</h2>
+				</div>
+				<div class="row" id="reviews">
+					<div class="review-item col-md-6 col-lg-3 d-flex align-items-stretch aos-init aos-animate">
+						<div class="icon-box icon-box-pink">
+							<div class="icon"><span class="review-score d-block char text-success"></span></div>
+							<h4 class="review-user"></h4>
+							<p class="review-date"></p>
+							<p class="review-content md"></p>
+						</div>
+					</div>
+				</div>
+			</div>
+		</section>
+		<section class="content-section" id="review" style="display:none">
+			<div class="container px-4 px-lg-5">
+				<div class="content-section-heading text-center">
+					<h3 class="text-secondary mb-0">Games</h3>
+					<h2 class="mb-5">Your Review</h2>
+				</div>
+				<div class="row gx-0 justify-content-center" >
+					<div class="col-md-6 col-lg-6">
+						<div class="review-wrap p-0">
+							<form name="review">
+								<p>
+									<label for="year">Score</label>
+									<input type="range" class="score" name="score" value="5" min="1" max="5" />
+									<output name="score_val">5</output>
+								</p>
+								<div class="review-content">
+									<div class="col-md-6">
+										<div class="review-form-group">
+											<textarea name="content" placeholder="review content" required></textarea>
+										</div>
+									</div>
+									<div class="col-md-6">
+										<article class="markdown md" name='markdown'></article>
+									</div>
+								</div>
+								<input type="hidden" name="username" placeholder="username" value/></p>
+								<input type="hidden" name="game" placeholder="game" value/></p>
+								<div style="text-align:center">
+									<button type="submit" class='review-form-control review-btn submit px-3'>Submit</button>
+								</div>
+							</form>
 						</div>
 					</div>
 				</div>

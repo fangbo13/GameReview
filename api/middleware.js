@@ -105,7 +105,7 @@ async function rolesChecked(context, next) {
 							]
 						}
 					, null, 2)
-					// return
+					return
 				}
 			}catch(err) {
 				context.response.status = 401
@@ -130,14 +130,26 @@ async function dataValidated(context, next) {
 	console.log('middleware: dataValidated')
 	const pathname = context.request.url.pathname
 	const method = context.request.method
-	const token = context.request.headers.get('authorization')
 	if (method === 'POST' && (pathname.includes('/games') || pathname.includes('/reviews'))) {
 		try {
-				const schemas = JSON.stringify(context.request.body())
-			} catch(err) {
-				console.log('invalid JSON')
-				return
-			}
+			const body = await context.request.body()
+			const data = await body.value
+			const schemas = JSON.stringify(data)
+		} catch(err) {
+			console.log('invalid JSON')
+			context.response.status = 400
+			context.response.body = JSON.stringify(
+				{
+					errors: [
+						{
+							title: '400 JSON parse',
+							detail: err.message
+						}
+					]
+				}
+			, null, 2)
+			return
+		}
 	}
 	await next()
 	return
@@ -233,8 +245,8 @@ async function errorHandler(context, next) {
 app.use(errorHandler)
 app.use(checkContentType)
 app.use(authHeaderPresent)
-app.use(dataValidated)
 app.use(rolesChecked)
+app.use(dataValidated)
 app.use(validCredentials)
 app.use(staticFiles)
 app.use(router.routes())

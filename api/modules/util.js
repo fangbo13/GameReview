@@ -104,6 +104,7 @@ export async function createJWT(payload) {
 export async function verifyJWT(jwt) {
 	try {
 		const str = await verify(jwt, signature, header.alg)
+		console.log(str)
 		if(str.role.name === 'user') {
 			return true;
 		} else {

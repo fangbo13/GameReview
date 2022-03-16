@@ -1210,7 +1210,6 @@ textarea{
   }
   .game-item img {
     transition: -webkit-clip-path 0.25s ease-out;
-    transition: clip-path 0.25s ease-out;
     transition: clip-path 0.25s ease-out, -webkit-clip-path 0.25s ease-out;
     -webkit-clip-path: inset(-1px);
             clip-path: inset(-1px);
@@ -1298,6 +1297,235 @@ textarea{
 .md h6 {
 	font-size: 0.95vw;
   margin: 24px 0 16px;
+}
+
+.table-bordered {
+  border: 1px solid #dee2e6; 
+  border-collapse: collapse;
+}
+.table-bordered th,
+.table-bordered td {
+  border: 1px solid #dee2e6; 
+}
+.table-bordered thead th,
+.table-bordered thead td {
+  border-bottom-width: 2px;
+}
+
+/* ========== REVIEW ========== */
+.icon-box {
+  padding: 30px;
+  position: relative;
+  overflow: hidden;
+  margin: 0 0 40px 0;
+  background: #fff;
+  box-shadow: 0 5px 26px 0 rgba(68, 88, 144, 0.14);
+  transition: all 0.3s ease-in-out;
+  text-align: center;
+  border: 1px solid #fff;
+}
+.icon {
+  margin: 0 auto 20px auto;
+  padding-top: 17px;
+  display: inline-block;
+  text-align: center;
+  border-radius: 50%;
+  width: 72px;
+  height: 72px;
+}
+.icon i {
+  font-size: 36px;
+  line-height: 1;
+}
+
+.review-score {
+  font-size: 28px;
+  color: #ff689b;
+}
+
+.review-user {
+  font-weight: 700;
+  margin-bottom: 15px;
+  font-size: 18px;
+}
+.review-user a {
+  color: #111;
+}
+
+.review-date {
+  font-size: 10px;
+  font-style: italic;
+}
+
+.review-content {
+  font-size: 15px;
+  line-height: 28px;
+  margin-bottom: 0;
+}
+.icon-box-pink .icon {
+  background: #fceef3;
+}
+.icon-box-pink .icon i {
+  color: #ff689b;
+}
+.icon-box-pink:hover {
+  border-color: #ff689b;
+}
+.icon-box-cyan .icon {
+  background: #e6fdfc;
+}
+.icon-box-cyan .icon i {
+  color: #3fcdc7;
+}
+.icon-box-cyan:hover {
+  border-color: #3fcdc7;
+}
+.icon-box-green .icon {
+  background: #eafde7;
+}
+.icon-box-green .icon i {
+  color: #41cf2e;
+}
+.icon-box-green:hover {
+  border-color: #41cf2e;
+}
+.icon-box-blue .icon {
+  background: #e1eeff;
+}
+.icon-box-blue .icon i {
+  color: #2282ff;
+}
+.icon-box-blue:hover {
+  border-color: #2282ff;
+}
+
+.review-wrap {
+	margin-bottom: 5rem;
+  	position: relative;
+}
+
+.review-wrap h3 {
+    font-weight: 300;
+}
+
+.score {
+  width: 80%;
+  color: #ecb807;
+}
+
+.review-form-group {
+  position: relative; 
+  margin: 1rem;
+}
+
+textarea{
+	background: #f8f9fa;
+	height: 15rem;
+	width: 100%;
+	border: 1px solid transparent;
+	border-radius: 10px;
+	padding-left: 20px;
+	padding-right: 20px;
+	-webkit-transition: 0.3s;
+	-o-transition: 0.3s;
+	transition: 0.3s;
+}
+
+.review-form-control {
+  background: #f8f9fa;
+  height: 40px;
+  width: 100%;
+  border: 1px solid transparent;
+  border-radius: 40px;
+  margin: 0 auto;
+  padding-left: 20px;
+  padding-right: 20px;
+  -webkit-transition: 0.3s;
+  -o-transition: 0.3s;
+  transition: 0.3s; 
+}
+@media (prefers-reduced-motion: reduce) {
+    .review-form-control {
+      -webkit-transition: none;
+      -o-transition: none;
+      transition: none; 
+	} 
+}
+.review-form-control input::-webkit-input-placeholder  {
+  color: #c4c3ca;
+  opacity: 0.7;
+  -webkit-transition: all 200ms linear;
+    transition: all 200ms linear;
+}
+.review-form-control:hover, .game-form-control:focus {
+	background: #e9ecef;
+	outline: none;
+	-webkit-box-shadow: none;
+	box-shadow: none;
+	border-color: rgba(255, 255, 255, 0.4); 
+}
+.review-form-control:focus {
+	border-color: rgba(255, 255, 255, 0.4); 
+}
+
+.review-content {
+  display: flex;
+}
+
+.review-content .markdown {
+  background-color: #f8f9fa;
+  color: #000;
+  height: 15rem;
+  border: 1px solid transparent;
+	border-radius: 10px;
+  margin: 1rem;
+	padding-left: 20px;
+	padding-right: 20px;
+	-webkit-transition: 0.3s;
+	-o-transition: 0.3s;
+	transition: 0.3s;
+}
+
+.review-btn{  
+	border-radius: 4px;
+	height: 44px;
+	width: 90%;
+	font-size: 13px;
+	font-weight: 600;
+	text-transform: uppercase;
+	-webkit-transition : all 200ms linear;
+	transition: all 200ms linear;
+  margin:0 auto;
+	padding: 0 30px;
+	letter-spacing: 1px;
+	display: -webkit-inline-flex;
+	display: -ms-inline-flexbox;
+	display: inline-flex;
+	-webkit-align-items: center;
+	-moz-align-items: center;
+	-ms-align-items: center;
+	align-items: center;
+	-webkit-justify-content: center;
+	-moz-justify-content: center;
+	-ms-justify-content: center;
+	justify-content: center;
+	-ms-flex-pack: center;
+	text-align: center;
+	border: none;
+	background-color: #ffeba7;
+	color: #102770;
+	box-shadow: 0 8px 24px 0 rgba(255,235,167,.2);
+}
+.review-btn:active,
+.review-btn:focus{  
+  background-color: #102770;
+  color: #ffeba7;
+  box-shadow: 0 8px 24px 0 rgba(16,39,112,.2);
+}
+.review-btn:hover{  
+  background-color: #102770;
+  color: #ffeba7;
+  box-shadow: 0 8px 24px 0 rgba(16,39,112,.2);
 }
 
 /* ========== FOOTER ========== */

@@ -14,7 +14,7 @@ CREATE TABLE IF NOT EXISTS roles (
   description VARCHAR(140)
 );
 
-INSERT INTO roles(name, description) VALUES("user", "user who can add game and review");
+INSERT INTO roles(name, description) VALUES("user", "user who can add game and reviews");
 INSERT INTO roles(name, description) VALUES("guest", "user who has no access");
 
 CREATE TABLE IF NOT EXISTS users (
