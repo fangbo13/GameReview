@@ -37,7 +37,7 @@ export async function setup(node) {
 		const response = await fetch('/api/games/'+id, {
 			headers: {
 				'authorization': token,
-				'Content-Type': 'application/json',
+				'Content-Type': 'application/vnd.api+json',
 				'host': 'https://taxi-mambo-8080.codio-box.uk/'
 			},
 		})

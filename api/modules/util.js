@@ -111,6 +111,7 @@ export async function verifyJWT(jwt) {
 		}
 	} catch(e) {
 		throw e
+		return false
     }
 }
 

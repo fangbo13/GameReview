@@ -2,6 +2,7 @@
 -- make sure the websiteuser account is set up and has the correct privileges
 CREATE USER IF NOT EXISTS websiteuser IDENTIFIED BY 'websitepassword';
 GRANT INSERT, SELECT, UPDATE, DELETE ON website.* TO websiteuser;
+
 DROP TABLE IF EXISTS reviews;
 DROP TABLE IF EXISTS games;
 DROP TABLE IF EXISTS users;
@@ -13,7 +14,7 @@ CREATE TABLE IF NOT EXISTS roles (
   description VARCHAR(140)
 );
 
-INSERT INTO roles(name, description) VALUES("user", "user who can add game and comment");
+INSERT INTO roles(name, description) VALUES("user", "user who can add game and review");
 INSERT INTO roles(name, description) VALUES("guest", "user who has no access");
 
 CREATE TABLE IF NOT EXISTS users (
@@ -50,7 +51,7 @@ CREATE TABLE IF NOT EXISTS games (
   constraint FOREIGN KEY (user) REFERENCES users(id)
 );
 
-CREATE TABLE IF NOT EXISTS comments (
+CREATE TABLE IF NOT EXISTS reviews (
   id MEDIUMINT UNSIGNED AUTO_INCREMENT PRIMARY KEY,
   content VARCHAR(140) NOT NULL,
   date DATE NOT NULL,

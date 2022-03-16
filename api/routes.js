@@ -7,7 +7,7 @@ import { moment } from "https://deno.land/x/deno_moment/mod.ts";
 import { extractCredentials, saveFile, createJWT } from './modules/util.js'
 import { login, rolesCheck, queryUsername, queryUserid } from './modules/users.js'
 import { queryallGames, queryGameById, insertGame } from './modules/games.js'
-import { queryallComments, queryCommentById, insertComment } from './modules/comments.js'
+import { queryallReviews, queryReviewById, insertReview } from './modules/reviews.js'
 
 const router = new Router()
 
@@ -24,9 +24,9 @@ router.get('/', async context => {
 				href: `https://${context.host}/api/games`,
 			},
 			{
-				name: 'comments',
-				desc: 'a list of comments',
-				href: `https://${context.host}/api/comments`,
+				name: 'reviews',
+				desc: 'a list of reviews',
+				href: `https://${context.host}/api/reviews`,
 			}
 		]
 	}
@@ -182,25 +182,24 @@ router.get('/api/games/:id', async context => {
 	}
 })
 
-router.get('/api/comments', async context => {
+router.get('/api/reviews', async context => {
 	context.response.headers.set('Allow', 'GET, POST')
-	console.log('GET /api/comments')
+	console.log('GET /api/reviews')
 	try {
-		const comments = await queryallComments()
+		const reviews = await queryallReviews()
 		context.host = context.request.url.host
-		comments.forEach(comment => {
-			comment.user = queryUsername(comment.user)
-			comment.game = queryGameById(comment.game)
-			comment.links =[
+		for(let review of reviews) {
+			review.user = await queryUsername(review.user)
+			review.links =[
 				{
-					herf: `https://${context.host}/api/comments/${comment.id}`,
-					rel: "comment",
+					herf: `https://${context.host}/api/reviews/${review.id}`,
+					rel: "review",
 					type: "GET"
 				}
 			]
-			// delete comment.id
-		})
-		context.response.body = JSON.stringify(comments, null, 2)
+			// delete review.id
+		}
+		context.response.body = JSON.stringify(reviews, null, 2)
 	}catch(err) {
 		context.response.status = 401
 		context.response.body = JSON.stringify(
@@ -216,21 +215,21 @@ router.get('/api/comments', async context => {
 	}
 })
 
-router.post('/api/comments', async context =>  {
+router.post('/api/reviews', async context =>  {
 	context.response.headers.set("Allow", 'GET, POST')
-	console.log('POST /api/comments')
+	console.log('POST /api/reviews')
 	try {
 		const body = await context.request.body()
 		const data = await body.value
 		const userid = await queryUserid(data.username)
 		const params = {content: data.content, date: moment().format('YYYY-MM-DD'), score: data.scoer, country: data.country, region: data.region,
 						user: userid, game: data.game }
-		await insertComment(params)
+		await insertReview(params)
 		context.response.status = 201
 		context.response.body = JSON.stringify(
 			{
 				data: {
-					message: 'comment added'
+					message: 'review added'
 				}
 			}
 		)
@@ -249,24 +248,23 @@ router.post('/api/comments', async context =>  {
 	}
 })
 
-router.get('/api/comments/:id', async context => {
+router.get('/api/reviews/:id', async context => {
 	context.response.headers.set('Allow', 'GET, PUT, DELETE')
-	console.log('GET /api/comments/:id')
+	console.log('GET /api/reviews/:id')
 	try {
-		const comment = await queryCommentById(context.params.id)
+		const review = await queryReviewById(context.params.id)
 		context.host = context.request.url.host
-		comment.user = queryUsername(comment.user)
-		comment.game = queryGameById(comment.game)
-		comment.links =[
+		review.user = queryUsername(review.user)
+		review.links =[
 			{
-				herf: `https://${context.host}/api/comments/${comment.id}`,
-				rel: "game",
+				herf: `https://${context.host}/api/reviews/${review.id}`,
+				rel: "reviews",
 				type: "GET"
 			}
 		]
-		context.response.body = JSON.stringify(comment, null, 2)
+		context.response.body = JSON.stringify(review, null, 2)
 	}catch(err) {
-		if(err.message === `comment "${context.params.id}" not found`){
+		if(err.message === `review "${context.params.id}" not found`){
 			context.response.status = 404
 			context.response.body = JSON.stringify(
 				{
