@@ -73,7 +73,7 @@ export async function fileExists(path) {
   }
 }
 
-export function saveFile(base64String, username) {
+export function saveFile(base64String, filename) {
 	console.log('save file')
 	const [ metadata, base64Image ] = base64String.split(';base64,')
 	console.log(metadata)
