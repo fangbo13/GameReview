@@ -24,23 +24,11 @@ export function extractCredentials(token) {
 	console.log('checkAuth')
 	if(token === undefined) throw new Error('no auth header')
 	const [type, hash] = token.split(' ')
-<<<<<<< HEAD
 	if(type !== 'Basic') throw new Error('wrong auth type')
 	const str = atob(hash)
 	if(str.indexOf(':') === -1) throw new Error('invalid auth format')
 	const [username, password] = str.split(':')
 	return { username, password }
-=======
-	console.log(`${type} : ${hash}`)
-	if(type !== 'Basic') throw new Error('wrong auth type')
-	const str = atob(hash)
-	console.log(str)
-	if(str.indexOf(':') === -1) throw new Error('invalid auth format')
-	const [user, pass] = str.split(':')
-	console.log(user)
-	console.log(pass)
-	return { user, pass }
->>>>>>> 9439224 (templates updated)
 }
 
 // https://github.com/thecodeholic/deno-serve-static-files/blob/final-version/oak/staticFileMiddleware.ts
@@ -72,11 +60,7 @@ export async function errorHandler(context, next) {
 }
 
 // checks if file exists
-<<<<<<< HEAD
-async function fileExists(path) {
-=======
 export async function fileExists(path) {
->>>>>>> 9439224 (templates updated)
   try {
     const stats = await Deno.lstat(path)
     return stats && stats.isFile
@@ -89,29 +73,16 @@ export async function fileExists(path) {
   }
 }
 
-<<<<<<< HEAD
 export function saveFile(base64String, filename) {
-=======
-export function saveFile(base64String, username) {
->>>>>>> 9439224 (templates updated)
 	console.log('save file')
 	const [ metadata, base64Image ] = base64String.split(';base64,')
 	console.log(metadata)
 	const extension = metadata.split('/').pop()
-<<<<<<< HEAD
 	const name = `${filename}.${extension}`
 	console.log(name)
 	Base64.fromBase64String(base64Image).toFile(`./spa/uploads/cover/${name}`)
 	console.log('file saved')
 	return name
-=======
-	console.log(extension)
-	const filename = `${username}-${Date.now()}.${extension}`
-	console.log(filename)
-	Base64.fromBase64String(base64Image).toFile(`./spa/uploads/${filename}`)
-	console.log('file saved')
-	return filename
->>>>>>> 9439224 (templates updated)
 }
 
 export async function getEtag(path) {
@@ -124,7 +95,6 @@ export async function getEtag(path) {
 	const etag = md5.update(uid).toString()
 	return etag
 }
-<<<<<<< HEAD
 
 export async function createJWT(payload) {
 	const jwt = await create(header, payload, signature)
@@ -144,5 +114,4 @@ export async function verifyJWT(jwt) {
     }
 }
 
-=======
->>>>>>> 9439224 (templates updated)
+

@@ -5,7 +5,7 @@ import { Application, send, Status } from 'https://deno.land/x/oak@v10.4.0/mod.t
 // status codes https://deno.land/std@0.82.0/http/http_status.ts
 // import { Md5 } from 'https://deno.land/std@0.89.0/hash/md5.ts'
 import { extractCredentials, fileExists, getEtag, setHeaders, verifyJWT } from './modules/util.js'
-import { login, rolesCheck } from "./api/modules/users.js";
+import { login, rolesCheck } from "./modules/users.js";
 
 import router from './routes.js'
 
