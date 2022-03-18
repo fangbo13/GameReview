@@ -150,29 +150,30 @@
 	</template>
 
 	<template id="games">
-		<section class="content-section" id="games">
+		<section class="content-section">
 			<div class="container px-4 px-lg-5">
                 <div class="content-section-heading text-center">
                     <h3 class="text-secondary mb-0">Games</h3>
                     <h2 class="mb-5">Games Information</h2>
                 </div>
-				<div class="row gx-0">
-					<template id="games-info">
-						<div class="col-lg-4">
-							<a class="game-item" href="#">
-								<div class="gameinfo">
-									<div class="gameinfo-content">
-										<div class="h2"></div>
-										<div class="mb-0"></div>
-									</div>
-								</div>
-								<img class="img-fluid">
-							</a>
-						</div>
-					</template>	
+				<div class="row gx-0">	
 				</div>
 			</div>
 		</section>
+	</template>
+
+	<template id="games-info">
+		<div class="col-lg-4">
+			<a class="game-item" href="#">
+				<div class="gameinfo">
+					<div class="gameinfo-content">
+						<div class="h2"></div>
+						<div class="mb-0"></div>
+					</div>
+				</div>
+				<img class="img-fluid">
+			</a>
+		</div>
 	</template>
 
 	<template id="detail">
@@ -283,5 +284,16 @@
 				</div>
 			</div>
 		</section>
+	</template>
+
+	<template id="review-item">
+		<div class="review-item col-md-6 col-lg-3 d-flex align-items-stretch aos-init aos-animate">
+			<div class="icon-box icon-box-pink">
+				<div class="icon"><span class="review-score d-block char text-success"></span></div>
+				<h4 class="review-user"></h4>
+				<p class="review-date"></p>
+				<p class="review-content md"></p>
+			</div>
+		</div>
 	</template>
 </html>

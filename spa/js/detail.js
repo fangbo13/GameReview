@@ -1,7 +1,7 @@
 
 /* detail.js */
 
-import { customiseNavbar, showMessage } from '../util.js'
+import { customiseNavbar, showMessage, loadPage } from '../util.js'
 // import { Ajv } from './ajv.min.js'
 
 //schema for json

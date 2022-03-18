@@ -43,9 +43,9 @@ async function addContent(node) {
 		},
 	})
 	const games = await response.json()
-	const template = document.querySelector('template#games')
+	const template = document.querySelector('template#games').cloneNode(true)
 	const div = template.content.querySelector('.gx-0')
-	const template_gameinfo = template.content.querySelector('template#games-info')
+	const template_gameinfo = document.querySelector('template#games-info')
 	for(const game of games) {
 		const fragment = template_gameinfo.content.querySelector('.col-lg-4').cloneNode(true)
 		fragment.querySelector('.gameinfo .h2').innerText = game.name
@@ -56,7 +56,7 @@ async function addContent(node) {
 		fragment.querySelector('.gameinfo').id = game.id
 		div.appendChild(fragment)
 	}
-	node.appendChild(template.content)
+	node.appendChild(template.content.querySelector('section'))
 }
 
 async function detail() {
