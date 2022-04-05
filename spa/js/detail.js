@@ -1,7 +1,7 @@
 
 /* detail.js */
 
-import { customiseNavbar, showMessage } from '../util.js'
+import { customiseNavbar, showMessage, loadPage } from '../util.js'
 // import { Ajv } from './ajv.min.js'
 
 //schema for json
@@ -43,36 +43,39 @@ export async function setup(node) {
 				'host': 'https://taxi-mambo-8080.codio-box.uk/'
 			},
 		})
-		const game = await response.json()
-		node.querySelector('img').src = "uploads/cover/" + game.cover
-		node.querySelector('.h2').innerText = game.name
-		node.querySelector('.mb-0[name=publisher]').innerText = game.publisher
-		node.querySelector('.mb-0[name=year]').innerText = game.year
-		node.querySelector('.mb-0[name=description]').innerHTML = converter.makeHtml(game.description)
-		node.querySelector('.mb-0[name=date]').innerText = game.add_date
-		node.querySelector('.mb-0[name=user]').innerText = game.user
+		let json = await response.json()
+		const game = json.data
+		node.querySelector('img').src = "uploads/cover/" + game.attributes.cover
+		node.querySelector('.h2').innerText = game.attributes.name
+		node.querySelector('.mb-0[name=publisher]').innerText = game.attributes.publisher
+		node.querySelector('.mb-0[name=year]').innerText = game.attributes.year
+		node.querySelector('.mb-0[name=description]').innerHTML = converter.makeHtml(game.attributes.description)
+		node.querySelector('.mb-0[name=date]').innerText = game.attributes.add_date
+		node.querySelector('.mb-0[name=user]').innerText = game.attributes.user
 
 		node.querySelector('input[name=username]').value = localStorage.getItem('username')
 		node.querySelector('input[name=game]').value = localStorage.getItem('game')
 
-		response = await fetch('/api/reviews', {
+		response = await fetch('/api/games/'+id+'/reviews', {
 			headers: {
 				'authorization': token,
 				'Content-Type': 'application/vnd.api+json',
 				'host': 'https://taxi-mambo-8080.codio-box.uk/'
 			},
 		})
-		const reviews = await response.json()
+		json = await response.json()
+		const reviews = json.data
+		console.log(reviews)
 		const div = node.querySelector('#reviews')
 		let fragment = div.querySelector('.review-item').cloneNode(true)
 		div.removeChild(div.querySelector('.review-item'))
 		console.log(fragment)
 		for(const review of reviews) {
 			fragment = fragment.cloneNode(true)
-			fragment.querySelector('.review-score').innerText = review.score
-			fragment.querySelector('.review-user').innerText = review.user
-			fragment.querySelector('.review-date').innerText = review.date
-			fragment.querySelector('.review-content').innerHTML = converter.makeHtml(review.content)
+			fragment.querySelector('.review-score').innerText = review.attributes.score
+			fragment.querySelector('.review-user').innerText = review.attributes.user
+			fragment.querySelector('.review-date').innerText = review.attributes.date
+			fragment.querySelector('.review-content').innerHTML = converter.makeHtml(review.attributes.content)
 			div.appendChild(fragment)
 		}
 
@@ -103,6 +106,7 @@ async function slide() {
 }
 
 async function add() {
+	const game = localStorage.getItem('game')
 	event.preventDefault()
 	console.log('form submitted')
 	const formData = new FormData(event.target)
@@ -110,7 +114,7 @@ async function add() {
 	console.log(data)
 	const token = localStorage.getItem('authorization')
 	console.log('making call to post')
-	const response = await fetch('/api/reviews', {
+	const response = await fetch('/api/games/'+game+'/reviews', {
 		method: 'POST', // or 'PUT'
 		headers: {
 			'authorization': token,

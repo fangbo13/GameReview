@@ -70,28 +70,44 @@ router.get('/api/users', async context => {
 
 router.get('/api/games', async context => {
 	context.response.headers.set('Allow', 'GET, POST')
+	context.host = context.request.url.host
 	console.log('GET /api/games')
 	try {
+		const collections = []
 		const games = await queryallGames()
-		context.host = context.request.url.host
 		for(let game of games) {
+			let collection = {}
 			game.user = await queryUsername(game.user)
-			game.links =[
-				{
-					herf: `https://${context.host}/api/games/${game.id}`,
-					rel: "game",
-					type: "GET"
+			collection.id = game.id
+			collection.type = "game"
+			delete game.id
+			collection.attributes = game
+			collection.relationships = {
+				reviews: {
+					links: {
+						self: `https://${context.host}/api/games/${collection.id}/reviews`
+					}
 				}
-			]
+			}
+			collection.links = {
+				self: `https://${context.host}/api/games/${collection.id}`
+			}
 			// delete game.id
+
+			collections.push(collection)
 		}
-		context.response.body = JSON.stringify(games, null, 2)
+		context.response.body = JSON.stringify(
+			{
+				data: collections
+			}
+		, null, 2)
 	}catch(err) {
 		context.response.status = 401
 		context.response.body = JSON.stringify(
 			{
 				errors: [
 					{
+						status: '401',
 						title: '401 Unauthorized.',
 						detail: err.message
 					}
@@ -128,6 +144,7 @@ router.post('/api/games', async context =>  {
 			{
 				errors: [
 					{
+						status: '400',
 						title: 'a problem occurred',
 						detail: err.message
 					}
@@ -139,20 +156,34 @@ router.post('/api/games', async context =>  {
 
 router.get('/api/games/:id', async context => {
 	context.response.headers.set('Allow', 'GET, PUT, DELETE')
+	context.host = context.request.url.host
 	console.log('GET /api/games/:id')
 	try {
+		const res = {}
+		res.id = context.params.id
+		res.type = "game"
+
 		const game = await queryGameById(context.params.id)
-		context.host = context.request.url.host
 		game.user = await queryUsername(game.user)
-		// console.log(game.add_date.format('YYYY-MM-DD'))
-		game.links =[
-			{
-				herf: `https://${context.host}/api/games/${game.id}`,
-				rel: "game",
-				type: "GET"
+		delete game.id
+		res.attributes = game
+		
+		res.relationships = {
+			reviews: {
+				links: {
+					self: `https://${context.host}/api/games/${res.id}/reviews`
+				}
 			}
-		]
-		context.response.body = JSON.stringify(game, null, 2)
+		}
+
+		res.links = {
+			self: `https://${context.host}/api/games/${res.id}`
+		}
+		context.response.body = JSON.stringify(
+			{
+				data: res
+			}
+		, null, 2)
 	}catch(err) {
 		if(err.message === `game "${context.params.id}" not found`){
 			context.response.status = 404
@@ -160,6 +191,7 @@ router.get('/api/games/:id', async context => {
 				{
 					errors: [
 						{
+							status: '404',
 							title: '404 not found.',
 							detail: err.message
 						}
@@ -172,6 +204,7 @@ router.get('/api/games/:id', async context => {
 				{
 					errors: [
 						{
+							status: '401',
 							title: '401 Unauthorized.',
 							detail: err.message
 						}
@@ -182,45 +215,74 @@ router.get('/api/games/:id', async context => {
 	}
 })
 
-router.get('/api/reviews', async context => {
+router.get('/api/games/:game/reviews', async context => {
 	context.response.headers.set('Allow', 'GET, POST')
-	console.log('GET /api/reviews')
+	context.host = context.request.url.host
+	console.log('GET /api/games/:game/reviews')
 	try {
-		const reviews = await queryallReviews()
-		context.host = context.request.url.host
+		const collections = []
+		const reviews = await queryallReviews(`${context.params.game}`)
 		for(let review of reviews) {
+			let collection = {}
 			review.user = await queryUsername(review.user)
-			console.log(review.user)
 			review.game = await queryGameById(review.game)
-			review.links =[
-				{
-					herf: `https://${context.host}/api/reviews/${review.id}`,
-					rel: "review",
-					type: "GET"
+			review.game = review.game.name
+			collection.id = review.id
+			collection.type = "review"
+			delete review.id
+
+			collection.attributes = review
+			collection.relationships = {
+				game: {
+					links: {
+						self: `https://${context.host}/api/games/${context.params.game}`
+					}
 				}
-			]
+			}
+			collection.links = {
+				self: `https://${context.host}/api/games/${context.params.game}/reviews/${collection.id}`
+			}
+			collections.push(collection)
 		}
-			// delete review.id
-		console.log(reviews)
-		context.response.body = JSON.stringify(reviews, null, 2)
-	}catch(err) {
-		context.response.status = 401
 		context.response.body = JSON.stringify(
 			{
-				errors: [
-					{
-						title: '401 Unauthorized.',
-						detail: err.message
-					}
-				]
+				data: collections
 			}
 		, null, 2)
+	}catch(err) {
+		if(err.message === `game "${context.params.game}" not found`){
+			context.response.status = 404
+			context.response.body = JSON.stringify(
+				{
+					errors: [
+						{
+							status: '404',
+							title: '404 not found.',
+							detail: err.message
+						}
+					]
+				}
+			, null, 2)
+		} else {
+			context.response.status = 401
+			context.response.body = JSON.stringify(
+				{
+					errors: [
+						{
+							status: '401',
+							title: '401 Unauthorized.',
+							detail: err.message
+						}
+					]
+				}
+			, null, 2)
+		}
 	}
 })
 
-router.post('/api/reviews', async context =>  {
+router.post('/api/games/:game/reviews', async context =>  {
 	context.response.headers.set("Allow", 'GET, POST')
-	console.log('POST /api/reviews')
+	console.log('POST /api/games/:game/reviews')
 	try {
 		const body = await context.request.body()
 		const data = await body.value
@@ -249,6 +311,7 @@ router.post('/api/reviews', async context =>  {
 			{
 				errors: [
 					{
+						status: '400',
 						title: 'a problem occurred',
 						detail: err.message
 					}
@@ -258,21 +321,35 @@ router.post('/api/reviews', async context =>  {
 	}
 })
 
-router.get('/api/reviews/:id', async context => {
+router.get('/api/games/:game/reviews/:id', async context => {
 	context.response.headers.set('Allow', 'GET, PUT, DELETE')
-	console.log('GET /api/reviews/:id')
+	context.host = context.request.url.host
+	console.log('GET /api/games/:game/reviews/:id')
 	try {
+		const res = {}
 		const review = await queryReviewById(context.params.id)
-		context.host = context.request.url.host
 		review.user = await queryUsername(review.user)
-		review.links =[
-			{
-				herf: `https://${context.host}/api/reviews/${review.id}`,
-				rel: "review",
-				type: "GET"
+		review.game = await queryGameById(review.game)
+		review.game = review.game.name
+		res.id = review.id
+		res.type = "review"
+		delete review.id
+		res.attributes = review
+		res.relationships = {
+			game: {
+				links: {
+					self: `https://${context.host}/api/games/${context.params.game}`
+				}
 			}
-		]
-		context.response.body = JSON.stringify(review, null, 2)
+		}
+		res.links = {
+			self: `https://${context.host}/api/games/${context.params.game}/reviews/${res.id}`
+		}
+		context.response.body = JSON.stringify(
+			{
+				data: res
+			}
+		, null, 2)
 	}catch(err) {
 		if(err.message === `review "${context.params.id}" not found`){
 			context.response.status = 404
@@ -280,6 +357,7 @@ router.get('/api/reviews/:id', async context => {
 				{
 					errors: [
 						{
+							status: '404',
 							title: '404 not found.',
 							detail: err.message
 						}
@@ -292,6 +370,7 @@ router.get('/api/reviews/:id', async context => {
 				{
 					errors: [
 						{
+							status: '401',
 							title: '401 Unauthorized.',
 							detail: err.message
 						}

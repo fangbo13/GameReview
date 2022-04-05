@@ -1,8 +1,11 @@
 import { db } from './db.js'
 
-export async function queryallReviews() {
-	let sql = `SELECT * FROM reviews;`
+export async function queryallReviews(game) {
+	let sql = `SELECT count(id) AS count FROM games WHERE id="${game}";`
 	let records = await db.query(sql)
+	if(!records[0].count) throw new Error(`game "${game}" not found`)
+	sql = `SELECT * FROM reviews where game="${game}";`
+	records = await db.query(sql)
 	return records
 }
 

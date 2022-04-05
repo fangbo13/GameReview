@@ -42,21 +42,22 @@ async function addContent(node) {
 			'host': 'https://taxi-mambo-8080.codio-box.uk/'
 		},
 	})
-	const games = await response.json()
-	const template = document.querySelector('template#games')
+	const json = await response.json()
+	const games = json.data
+	const template = document.querySelector('template#games').cloneNode(true)
 	const div = template.content.querySelector('.gx-0')
-	const template_gameinfo = template.content.querySelector('template#games-info')
+	const template_gameinfo = document.querySelector('template#games-info')
 	for(const game of games) {
 		const fragment = template_gameinfo.content.querySelector('.col-lg-4').cloneNode(true)
-		fragment.querySelector('.gameinfo .h2').innerText = game.name
-		fragment.querySelector('.gameinfo .mb-0').innerText = game.year
-		fragment.querySelector('.img-fluid').src = 'uploads/cover/' + game.cover
+		fragment.querySelector('.gameinfo .h2').innerText = game.attributes.name
+		fragment.querySelector('.gameinfo .mb-0').innerText = game.attributes.year
+		fragment.querySelector('.img-fluid').src = 'uploads/cover/' + game.attributes.cover
 		fragment.querySelector('a').href="javascript:void(0);" 
 		fragment.querySelector('a').addEventListener('click', await detail)
 		fragment.querySelector('.gameinfo').id = game.id
 		div.appendChild(fragment)
 	}
-	node.appendChild(template.content)
+	node.appendChild(template.content.querySelector('section'))
 }
 
 async function detail() {
