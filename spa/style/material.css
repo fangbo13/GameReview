@@ -791,7 +791,7 @@ aside {
 
 .game-form-group {
   position: relative; 
-  margin: 1rem;
+  margin: 1rem 0 1rem 0;
 }
 
 textarea{
@@ -854,7 +854,7 @@ textarea{
   height: 15rem;
   border: 1px solid transparent;
 	border-radius: 10px;
-  margin: 1rem;
+  margin: 1rem 0 1rem 0;
 	padding-left: 20px;
 	padding-right: 20px;
 	-webkit-transition: 0.3s;
@@ -904,6 +904,30 @@ textarea{
   box-shadow: 0 8px 24px 0 rgba(16,39,112,.2);
 }
 
+label.cabinet{
+	display: block;
+	cursor: pointer;
+}
+
+label.cabinet input.file{
+	position: relative;
+	height: 100%;
+	width: auto;
+	opacity: 0;
+	-moz-opacity: 0;
+  filter:progid:DXImageTransform.Microsoft.Alpha(opacity=0);
+  margin-top:-30px;
+}
+
+#upload-demo{
+	width: 250px;
+	height: 250px;
+  padding-bottom:25px;
+}
+
+.modal {
+  color: rgb(33, 37, 41);
+}
 /* ========== Game info ========== */
 
 .content-section {
@@ -935,7 +959,7 @@ textarea{
   display: block;
   position: relative;
   overflow: hidden;
-  max-width: 530px;
+  height: 250px;
   margin: auto auto 1rem;
 }
 .game-item .gameinfo {
@@ -980,6 +1004,7 @@ textarea{
     margin-bottom: 5rem;
   }
   .game-item img {
+    height: 250px;
     transition: -webkit-clip-path 0.25s ease-out;
     transition: clip-path 0.25s ease-out, -webkit-clip-path 0.25s ease-out;
     -webkit-clip-path: inset(-1px);
@@ -1090,6 +1115,7 @@ textarea{
 
 /* ========== REVIEW ========== */
 .icon-box {
+  width: 80%;
   padding: 30px;
   position: relative;
   overflow: hidden;

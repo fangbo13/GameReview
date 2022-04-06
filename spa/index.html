@@ -12,8 +12,18 @@
 		<link href="https://unpkg.com/aos@2.3.1/dist/aos.css" rel="stylesheet">
         <!-- Google fonts-->
         <link href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,700,300italic,400italic,700italic" rel="stylesheet" type="text/css" />
-		
+		<!-- crop -->
+		<link rel="stylesheet" href="https://cdn.bootcdn.net/ajax/libs/twitter-bootstrap/4.6.1/css/bootstrap.min.css" />
+		<link rel="Stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/cropperjs/2.0.0-alpha.2/cropper.min.css" />
 		<link rel="stylesheet" href="style/main.css">
+		<!-- js crop -->
+		<!-- <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script> -->
+		<!-- <script src="https://cdn.bootcdn.net/ajax/libs/jquery/3.6.0/jquery.js"></script> -->
+		<script src="https://cdn.bootcdn.net/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+		<!-- <script src="https://cdn.bootcdn.net/ajax/libs/jquery/3.6.0/jquery.slim.js"></script> -->
+		<script src="https://cdn.bootcdn.net/ajax/libs/twitter-bootstrap/4.6.1/js/bootstrap.js"></script>
+		<script src="https://cdnjs.cloudflare.com/ajax/libs/cropperjs/2.0.0-alpha.2/cropper.min.js"></script>
+		<!-- <script src="https://cdn.bootcdn.net/ajax/libs/twitter-bootstrap/4.6.1/js/bootstrap.bundle.min.js" crossorigin="anonymous"></script> -->
 		<!-- showdown for markdown -->
 		<script src="https://cdnjs.cloudflare.com/ajax/libs/showdown/1.4.0/showdown.min.js"></script>
 		<script type="text/javascript" src='js/scripts.js'></script>
@@ -137,8 +147,29 @@
 								</div>
 							</div>
 							<p>
-								<input id="cover" type="file" accept="image/*" name="cover" />
+								<input id="cover" type="file" accept="image/*" name="cover" capture="camera" />
 							</p>
+							<div class="modal fade" id="cropImagePop" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+								<div class="modal-dialog">
+									<div class="modal-content">
+										<div class="modal-header">
+											<h5 class="modal-title" id="modalLabel">Game Cover</h5>
+											<button type="button" class="close" data-dismiss="modal" aria-label="Close">
+											<span aria-hidden="true">x</span>
+											</button>
+										</div>
+										<div class="modal-body">
+											<div class="img-container">
+												<img id="image" src="" alt="Picture">
+											</div>
+										</div>
+										<div class="modal-footer">
+											<button type="button" id="cropCloseBtn" class="btn btn-secondary" data-dismiss="modal">Close</button>
+											<button type="button" id="cropImageBtn" class="btn btn-primary">Crop</button>
+										</div>
+									</div>
+								</div>
+							</div>
 							<input type="hidden" name="username" placeholder="username" value/></p>
 							<div style="text-align:center">
 								<button type="submit" class='login-form-control game-btn submit px-3'>Submit</button>

@@ -50,7 +50,7 @@ export async function setup(node) {
 		node.querySelector('.mb-0[name=publisher]').innerText = game.attributes.publisher
 		node.querySelector('.mb-0[name=year]').innerText = game.attributes.year
 		node.querySelector('.mb-0[name=description]').innerHTML = converter.makeHtml(game.attributes.description)
-		node.querySelector('.mb-0[name=date]').innerText = game.attributes.add_date
+		node.querySelector('.mb-0[name=date]').innerText = game.attributes.add_date.split('T')[0]
 		node.querySelector('.mb-0[name=user]').innerText = game.attributes.user
 
 		node.querySelector('input[name=username]').value = localStorage.getItem('username')
@@ -74,7 +74,7 @@ export async function setup(node) {
 			fragment = fragment.cloneNode(true)
 			fragment.querySelector('.review-score').innerText = review.attributes.score
 			fragment.querySelector('.review-user').innerText = review.attributes.user
-			fragment.querySelector('.review-date').innerText = review.attributes.date
+			fragment.querySelector('.review-date').innerText = review.attributes.date.split('T')[0]
 			fragment.querySelector('.review-content').innerHTML = converter.makeHtml(review.attributes.content)
 			div.appendChild(fragment)
 		}
