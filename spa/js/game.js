@@ -13,6 +13,7 @@ export async function setup(node) {
 		const token = localStorage.getItem('authorization')
 		console.log(token)
 		if(token === null) customiseNavbar(['game', 'login']) //navbar if logged out
+
 		node.querySelector('input[name=username]').value = localStorage.getItem('username')
 		node.querySelector('form').addEventListener('submit', await add)
 		node.querySelector('input[name=year]').addEventListener('input', await slide)
@@ -64,12 +65,62 @@ async function add() {
 }
 
 async function upload() {
-	file = document.querySelector('#cover').files[0]
-	switch(file.type) {
-		case 'image/jpg':case 'image/png':case 'image/jpeg':
-			file.base64 = await file2DataURI(file)
-			break
-		default:
-			showMessage('Unsupport file type')
+	var files = document.querySelector('#cover').files;
+	var $modal = $('#cropImagePop');
+
+	var done = function (url) {
+		file.value = '';
+		image.src = url;
+		$modal.modal('show');
+	};
+	var reader;
+	var file;
+	var url;
+	var cropper;
+
+	if (files && files.length > 0) {
+		file = files[0];
+
+		if (URL) {
+			done(URL.createObjectURL(file));
+		} else if (FileReader) {
+			reader = new FileReader();
+			reader.onload = function (e) {
+				done(reader.result);
+			};
+			reader.readAsDataURL(file);
+		}
 	}
+
+	$modal.on('shown.bs.modal', function () {
+		cropper = new Cropper(image, {
+			aspectRatio: 1
+		});
+	}).on('hidden.bs.modal', function () {
+		cropper.destroy();
+		cropper = null;
+	});
+
+	document.getElementById('cropImageBtn').addEventListener('click', function () {
+		var initialAvatarURL;
+		var canvas;
+
+		$modal.modal('hide');
+
+		if (cropper) {
+			canvas = cropper.getCroppedCanvas({
+				width: 160,
+				height: 160,
+			});
+			file.base64 = canvas.toDataURL();
+		}
+	});
+
+	document.querySelector('.close').addEventListener('click', function() {
+		$modal.modal('hide');
+	});
+
+	document.querySelector('#cropCloseBtn').addEventListener('click', function() {
+		$modal.modal('hide');
+	});
 }
