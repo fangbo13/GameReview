@@ -127,7 +127,7 @@ router.post('/api/games', async context =>  {
 		const covername = saveFile(data.cover.base64, data.name.replace(/ /g,"_"))
 		const userid = await queryUserid(data.username)
 		const params = {name: data.name, publisher: data.publisher, year: data.year, add_date: moment().format('YYYY-MM-DD'),
-						add_time: moment().format('HH:MM:SS'), description: data.description, cover: covername, user: userid }
+						add_time: moment().format('HH:mm:ss'), description: data.description, cover: covername, user: userid }
 		await insertGame(params)
 		console.log('game added')
 		context.response.status = 201
@@ -140,7 +140,7 @@ router.post('/api/games', async context =>  {
 						publisher: data.publisher,
 						year: data.year,
 						add_date: moment().format('YYYY-MM-DD'),
-						add_time: moment().format('HH:MM:SS'),
+						add_time: moment().format('HH:mm:ss'),
 						description: data.description,
 						cover: covername, 
 						user: data.username
@@ -304,7 +304,7 @@ router.post('/api/games/:game/reviews', async context =>  {
 			data.region = ""
 		} 
 		const params = {content: data.content, date: moment().format('YYYY-MM-DD'),  
-						time: moment().format('HH:MM:SS'), score: data.score, country: data.country, 
+						time: moment().format('HH:mm:ss'), score: data.score, country: data.country, 
 						region: data.region, user: userid, game: data.game }
 		console.log(params)
 		await insertReview(params)
@@ -316,7 +316,7 @@ router.post('/api/games/:game/reviews', async context =>  {
 					attributes: {
 						content: data.content, 
 						date: moment().format('YYYY-MM-DD'),  
-						time: moment().format('HH:MM:SS'), 
+						time: moment().format('HH:mm:ss'), 
 						score: data.score, 
 						country: data.country, 
 						region: data.region, 
