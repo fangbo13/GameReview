@@ -16,8 +16,8 @@ export async function queryGameById(id) {
 }
 
 export async function insertGame(params) {
-	const sql = `INSERT INTO games(name, publisher, year, add_date, description, cover, user) VALUES(
-		"${params.name}", "${params.publisher}", "${params.year}", "${params.add_date}", "${params.description}",
+	const sql = `INSERT INTO games(name, publisher, year, add_date, add_time, description, cover, user) VALUES(
+		"${params.name}", "${params.publisher}", "${params.year}", "${params.add_date}", "${params.add_time}", "${params.description}",
 		"${params.cover}", "${params.user}")`
 	await db.query(sql)
 }

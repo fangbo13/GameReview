@@ -19,8 +19,8 @@ export async function queryReviewById(id) {
 }
 
 export async function insertReview(params) {
-	const sql = `INSERT INTO reviews(content, date, score, country, region, user, game) VALUES(
-		"${params.content}", "${params.date}", ${params.score}, "${params.country}", "${params.region}",
+	const sql = `INSERT INTO reviews(content, date, time, score, country, region, user, game) VALUES(
+		"${params.content}", "${params.date}", "${params.time}", ${params.score}, "${params.country}", "${params.region}",
 		"${params.user}", "${params.game}")`
 	await db.query(sql)
 }
