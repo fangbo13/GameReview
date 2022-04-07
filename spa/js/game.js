@@ -94,7 +94,8 @@ async function upload() {
 
 	$modal.on('shown.bs.modal', function () {
 		cropper = new Cropper(image, {
-			aspectRatio: 1
+			aspectRatio: 1,
+			aspectRatio: 16/9
 		});
 	}).on('hidden.bs.modal', function () {
 		cropper.destroy();
@@ -110,7 +111,7 @@ async function upload() {
 		if (cropper) {
 			canvas = cropper.getCroppedCanvas({
 				width: 160,
-				height: 160,
+				height: 90,
 			});
 			file.base64 = canvas.toDataURL();
 		}

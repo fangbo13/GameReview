@@ -134,7 +134,16 @@ router.post('/api/games', async context =>  {
 		context.response.body = JSON.stringify(
 			{
 				data: {
-					message: 'game added'
+					type: 'game',
+					attributes: {
+						name: data.name,
+						publisher: data.publisher,
+						year: data.year,
+						add_date: moment().format('YYYY-MM-DD'),
+						description: data.description,
+						cover: covername, 
+						user: data.username
+					}
 				}
 			}
 		)

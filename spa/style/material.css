@@ -959,7 +959,6 @@ label.cabinet input.file{
   display: block;
   position: relative;
   overflow: hidden;
-  height: 250px;
   margin: auto auto 1rem;
 }
 .game-item .gameinfo {
@@ -1004,7 +1003,6 @@ label.cabinet input.file{
     margin-bottom: 5rem;
   }
   .game-item img {
-    height: 250px;
     transition: -webkit-clip-path 0.25s ease-out;
     transition: clip-path 0.25s ease-out, -webkit-clip-path 0.25s ease-out;
     -webkit-clip-path: inset(-1px);

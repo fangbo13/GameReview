@@ -30,6 +30,7 @@ async function checkContentType(context, next) {
 			{
 				errors: [
 					{
+						statu: '415',
 						title: '415 Unsupported Media Type',
 						detail: 'This API supports the JSON:API specification, Content-Type must be application/vnd.api+json'
 					}
@@ -68,7 +69,8 @@ async function authHeaderPresent(context, next) {
 			{
 				errors: [
 					{
-						title: '201 Unauthorized',
+						statu: '401',
+						title: '401 Unauthorized',
 						detail: 'the API uses HTTP Basic Auth and requires a correctly-formatted Authorization header'
 					}
 				]
@@ -99,6 +101,7 @@ async function rolesChecked(context, next) {
 						{
 							errors: [
 								{
+									statu: '403',
 									title: '403 Forbidden',
 									detail: 'User Role Forbidden'
 								}
@@ -113,6 +116,7 @@ async function rolesChecked(context, next) {
 					{
 						errors: [
 							{
+								statu: '401',
 								title: '401 Unauthorized',
 								detail: err.message
 							}
@@ -142,6 +146,7 @@ async function dataValidated(context, next) {
 				{
 					errors: [
 						{
+							statu: '400',
 							title: '400 JSON parse',
 							detail: err.message
 						}
@@ -188,6 +193,7 @@ async function validCredentials(context, next) {
 				{
 					errors: [
 						{
+							statu: '401',
 							title: '401 Unauthorized!',
 							detail: err.message
 						}
@@ -231,6 +237,7 @@ async function errorHandler(context, next) {
 			{
 				errors: [
 					{
+						statu: '500',
 						title: '500 Internal Server error',
 						detail: err.message
 					}
